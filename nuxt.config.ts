@@ -68,8 +68,9 @@ export default defineNuxtConfig({
   },
 
   umami: {
+    enabled: true,
     id: 'beb3e0d7-9081-456f-babc-430e9604a7ce',
-    host: 'https://eslint-ast-explorer.ntnyq.com',
+    host: 'https://api-gateway.umami.dev',
     autoTrack: false,
     ignoreLocalhost: true,
   },
