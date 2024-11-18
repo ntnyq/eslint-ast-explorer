@@ -1,0 +1,44 @@
+{
+  "prettier.enable": true,
+  "eslint.enable": true,
+  "eslint.validate": [
+    "vue",
+    "yaml",
+    "html",
+    "toml",
+    "json",
+    "jsonc",
+    "json5",
+    "markdown",
+    "javascript",
+    "typescript",
+    "javascriptreact",
+    "typescriptreact"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
+  },
+  "cSpell.allowCompoundWords": true,
+  "cSpell.words": [
+    "bumpp",
+    "changelogithub",
+    "echarts",
+    "estree",
+    "gstatic",
+    "iconify",
+    "nocheck",
+    "nuxt",
+    "Nuxter",
+    "nuxtjs",
+    "pathe",
+    "shiki",
+    "tinymce",
+    "uncrypto",
+    "unplugin",
+    "valibot",
+    "vite",
+    "vueuse",
+    "zrender"
+  ]
+}
