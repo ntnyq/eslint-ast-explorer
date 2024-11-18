@@ -3,7 +3,7 @@
 [![CI](https://github.com/ntnyq/eslint-ast-explorer/workflows/CI/badge.svg)](https://github.com/ntnyq/eslint-ast-explorer/actions)
 [![LICENSE](https://img.shields.io/github/license/ntnyq/eslint-ast-explorer.svg)](https://github.com/ntnyq/eslint-ast-explorer/blob/main/LICENSE)
 
-> :apple: Template for start a nuxt app.
+> :apple: ESLint AST explorer.
 
 ## Commands
 
@@ -23,6 +23,10 @@ pnpm run generate
 # local preview
 pnpm run preview
 ```
+
+## Credits
+
+- Most of source code is copied from [ast-explorer](https://github.com/sxzz/ast-explorer)
 
 ## License
 

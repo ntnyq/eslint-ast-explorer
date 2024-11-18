@@ -6,7 +6,7 @@
 import { META } from './constants'
 
 export default defineNuxtConfig({
-  modules: ['@vueuse/nuxt', '@unocss/nuxt', 'nuxt-monaco-editor'],
+  modules: ['@vueuse/nuxt', '@unocss/nuxt', 'nuxt-monaco-editor', 'nuxt-umami'],
 
   experimental: {
     payloadExtraction: false,
@@ -67,8 +67,15 @@ export default defineNuxtConfig({
     },
   },
 
+  umami: {
+    id: 'beb3e0d7-9081-456f-babc-430e9604a7ce',
+    host: 'https://eslint-ast-explorer.ntnyq.com',
+    autoTrack: false,
+    ignoreLocalhost: true,
+  },
+
   imports: {
-    dirs: ['./composables', './utils'],
+    dirs: ['./composables', './composables/state', './composables/parser', './utils'],
     addons: {
       vueTemplate: true,
     },
