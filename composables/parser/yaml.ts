@@ -28,7 +28,7 @@ export const yamlESLint = defineParser<typeof YamlESLint, YamlESLintParseOptions
 export const yaml = defineLanguage({
   label: 'YAML',
   // @unocss-include
-  icon: 'i-vscode-icons:file-type-js-official',
+  icon: 'i-vscode-icons:file-type-light-yaml',
   parsers: [yamlESLint],
   codeTemplate: yamlTemplate,
 })

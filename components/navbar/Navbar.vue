@@ -14,6 +14,7 @@ import { version } from '~/package.json'
         </h1>
         <small>{{ `v${version}` }}</small>
       </div>
+      <LanguageSelect />
     </div>
 
     <div class="flex gap-3 max-sm:(w-full flex-col)">

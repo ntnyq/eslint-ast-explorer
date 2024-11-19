@@ -1,3 +1,36 @@
+import { astro } from '../parser/astro'
+import { javascript } from '../parser/javascript'
+import { json } from '../parser/json'
+import { svelte } from '../parser/svelte'
+import { toml } from '../parser/toml'
+import { vue } from '../parser/vue'
+import { yaml } from '../parser/yaml'
+
+export type MonacoLanguage =
+  | 'javascript'
+  | 'typescript'
+  | 'json'
+  | 'vue'
+  | 'yaml'
+  | 'html'
+  | 'markdown'
+  | 'css'
+  | 'svelte'
+  | 'astro'
+  | 'toml'
+
+export const LANGUAGES = {
+  astro,
+  javascript,
+  json,
+  svelte,
+  toml,
+  vue,
+  yaml,
+}
+
+export type Language = keyof typeof LANGUAGES
+
 // Parser
 export const loading = ref<'load' | 'parse' | false>(false)
 
