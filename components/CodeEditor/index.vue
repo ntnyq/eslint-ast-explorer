@@ -8,9 +8,9 @@ const props = defineProps<{
 }>()
 const code = defineModel<string>()
 
-const containerRef = shallowRef<{
+const containerRef = useTemplateRef<{
   $editor: Monaco.editor.IStandaloneCodeEditor | undefined
-}>()
+}>('containerRef')
 
 const options = computed<Monaco.editor.IStandaloneEditorConstructionOptions>(() => ({
   ...getSharedMonacoOptions(),

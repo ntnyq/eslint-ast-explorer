@@ -3,11 +3,11 @@
  */
 
 export const META = Object.freeze({
-  appName: 'ESLint AST Explorer',
-
   appDescription: 'ESLint AST Explorer',
 
   appImage: '',
+
+  appName: 'ESLint AST Explorer',
 
   appUrl: 'https://eslint-ast-explorer.ntnyq.com',
 })

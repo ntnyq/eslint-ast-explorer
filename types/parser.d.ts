@@ -11,7 +11,7 @@ export interface Parser<C = unknown, O = unknown> {
 
   pkgName: string
 
-  version: string | ((this: C | Promise<C>, pkgName: string) => string | Promise<string>)
+  version: ((this: C | Promise<C>, pkgName: string) => Promise<string> | string) | string
 
   versionOverridable?: boolean
 
@@ -24,16 +24,16 @@ export interface Parser<C = unknown, O = unknown> {
     editorLanguage: MonacoLanguage
   } & (
     | {
-        defaultValue: string
-        defaultValueType?: 'javascript'
-      }
-    | {
         defaultValue: O
         defaultValueType?: 'json5'
       }
+    | {
+        defaultValue: string
+        defaultValueType?: 'javascript'
+      }
   )
 
-  editorLanguage: MonacoLanguage | ((options: O) => MonacoLanguage)
+  editorLanguage: ((options: O) => MonacoLanguage) | MonacoLanguage
 
   gui?: AsyncComponentLoader
 }

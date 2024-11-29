@@ -6,13 +6,60 @@
 import { META } from './constants'
 
 export default defineNuxtConfig({
-  modules: ['@vueuse/nuxt', '@unocss/nuxt', 'nuxt-monaco-editor', 'nuxt-umami'],
+  app: {
+    head: {
+      link: [{ href: '/icon_48.png', rel: 'icon', type: 'image/png' }],
+      meta: [
+        { content: 'width=device-width, initial-scale=1', name: 'viewport' },
+        { content: META.appDescription, name: 'description' },
+        { content: 'black-translucent', name: 'apple-mobile-web-app-status-bar-style' },
+      ],
+      title: META.appName,
+      viewport: 'width=device-width,initial-scale=1',
+    },
+  },
+
+  compatibilityDate: '2024-11-26',
+
+  components: {
+    dirs: [
+      {
+        path: '~/components',
+        pathPrefix: false,
+      },
+    ],
+    transform: {
+      include: [/\.vue/, /\.md/],
+    },
+  },
+
+  css: [
+    '@unocss/reset/tailwind.css',
+    'floating-vue/dist/style.css',
+    '~/styles/vars.css',
+    '~/styles/global.css',
+  ],
+
+  devtools: { enabled: true },
 
   experimental: {
     payloadExtraction: false,
     renderJsonPayloads: true,
     typedPages: true,
   },
+
+  future: {
+    compatibilityVersion: 4,
+  },
+
+  imports: {
+    addons: {
+      vueTemplate: true,
+    },
+    dirs: ['./composables', './composables/state', './composables/parser', './utils'],
+  },
+
+  modules: ['@vueuse/nuxt', '@unocss/nuxt', 'nuxt-monaco-editor', 'nuxt-umami'],
 
   nitro: {
     esbuild: {
@@ -26,17 +73,14 @@ export default defineNuxtConfig({
     },
   },
 
-  app: {
-    head: {
-      title: META.appName,
-      viewport: 'width=device-width,initial-scale=1',
-      link: [{ rel: 'icon', type: 'image/png', href: '/icon_48.png' }],
-      meta: [
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: META.appDescription },
-        { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
-      ],
-    },
+  ssr: false,
+
+  umami: {
+    autoTrack: false,
+    enabled: true,
+    host: 'https://api-gateway.umami.dev',
+    id: 'beb3e0d7-9081-456f-babc-430e9604a7ce',
+    ignoreLocalhost: true,
   },
 
   vite: {
@@ -53,49 +97,5 @@ export default defineNuxtConfig({
     server: {
       cors: true,
     },
-  },
-
-  components: {
-    dirs: [
-      {
-        path: '~/components',
-        pathPrefix: false,
-      },
-    ],
-    transform: {
-      include: [/\.vue/, /\.md/],
-    },
-  },
-
-  umami: {
-    enabled: true,
-    id: 'beb3e0d7-9081-456f-babc-430e9604a7ce',
-    host: 'https://api-gateway.umami.dev',
-    autoTrack: false,
-    ignoreLocalhost: true,
-  },
-
-  imports: {
-    dirs: ['./composables', './composables/state', './composables/parser', './utils'],
-    addons: {
-      vueTemplate: true,
-    },
-  },
-
-  css: [
-    '@unocss/reset/tailwind.css',
-    'floating-vue/dist/style.css',
-    '~/styles/vars.css',
-    '~/styles/global.css',
-  ],
-
-  ssr: false,
-
-  devtools: { enabled: true },
-
-  compatibilityDate: '2024-10-26',
-
-  future: {
-    compatibilityVersion: 4,
   },
 })

@@ -10,6 +10,8 @@ export function importUrl<T = any>(url: string, sandbox?: boolean): Promise<T> {
     document.body.parentElement!.append(iframe)
     return (iframe.contentWindow as any).eval(`import(${JSON.stringify(url)})`)
   }
+  // vite-magic-comment
+  // eslint-disable-next-line jsdoc/no-bad-blocks
   return import(/* @vite-ignore */ url)
 }
 
