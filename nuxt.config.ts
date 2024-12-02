@@ -8,6 +8,9 @@ import { META } from './constants'
 export default defineNuxtConfig({
   app: {
     head: {
+      htmlAttrs: {
+        lang: 'en',
+      },
       link: [{ href: '/icon_48.png', rel: 'icon', type: 'image/png' }],
       meta: [
         { content: 'width=device-width, initial-scale=1', name: 'viewport' },

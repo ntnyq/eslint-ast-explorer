@@ -13,6 +13,7 @@ defineProps<{
   <component
     :is="to ? NuxtLink : 'button'"
     :to="to"
+    :aria-label="title"
     :class="[color || 'btn-simple-primary']"
     :type="to ? undefined : 'button'"
     class="relative px-2.5 py-2 lh-1em shadow"
