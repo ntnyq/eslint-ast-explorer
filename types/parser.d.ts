@@ -1,23 +1,27 @@
 import type { AsyncComponentLoader } from 'vue'
 
 export interface Parser<C = unknown, O = unknown> {
+  editorLanguage: MonacoLanguage | ((options: O) => MonacoLanguage)
+
+  icon: string
+
   id: string
 
   label: string
-
-  icon: string
 
   link: string
 
   pkgName: string
 
-  version: ((this: C | Promise<C>, pkgName: string) => Promise<string> | string) | string
+  version: string | ((this: C | Promise<C>, pkgName: string) => string | Promise<string>)
+
+  gui?: AsyncComponentLoader
 
   versionOverridable?: boolean
 
-  init?: (pkgId: string) => C | Promise<C>
-
   parse: (this: C, code: string, options: O) => unknown
+
+  init?: (pkgId: string) => C | Promise<C>
 
   options: {
     configurable: boolean
@@ -32,8 +36,4 @@ export interface Parser<C = unknown, O = unknown> {
         defaultValueType?: 'javascript'
       }
   )
-
-  editorLanguage: ((options: O) => MonacoLanguage) | MonacoLanguage
-
-  gui?: AsyncComponentLoader
 }

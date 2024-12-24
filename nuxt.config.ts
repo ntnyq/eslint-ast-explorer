@@ -6,23 +6,29 @@
 import { META } from './constants'
 
 export default defineNuxtConfig({
+  compatibilityDate: '2024-12-24',
+
+  devtools: { enabled: true },
+
+  modules: ['@vueuse/nuxt', '@unocss/nuxt', 'nuxt-monaco-editor', 'nuxt-umami'],
+
+  ssr: false,
+
   app: {
     head: {
+      link: [{ href: '/icon_48.png', rel: 'icon', type: 'image/png' }],
+      title: META.appName,
+      viewport: 'width=device-width,initial-scale=1',
       htmlAttrs: {
         lang: 'en',
       },
-      link: [{ href: '/icon_48.png', rel: 'icon', type: 'image/png' }],
       meta: [
         { content: 'width=device-width, initial-scale=1', name: 'viewport' },
         { content: META.appDescription, name: 'description' },
         { content: 'black-translucent', name: 'apple-mobile-web-app-status-bar-style' },
       ],
-      title: META.appName,
-      viewport: 'width=device-width,initial-scale=1',
     },
   },
-
-  compatibilityDate: '2024-11-26',
 
   components: {
     dirs: [
@@ -43,8 +49,6 @@ export default defineNuxtConfig({
     '~/styles/global.css',
   ],
 
-  devtools: { enabled: true },
-
   experimental: {
     payloadExtraction: false,
     renderJsonPayloads: true,
@@ -56,13 +60,11 @@ export default defineNuxtConfig({
   },
 
   imports: {
+    dirs: ['./composables', './composables/state', './composables/parser', './utils'],
     addons: {
       vueTemplate: true,
     },
-    dirs: ['./composables', './composables/state', './composables/parser', './utils'],
   },
-
-  modules: ['@vueuse/nuxt', '@unocss/nuxt', 'nuxt-monaco-editor', 'nuxt-umami'],
 
   nitro: {
     esbuild: {
@@ -75,8 +77,6 @@ export default defineNuxtConfig({
       routes: ['/'],
     },
   },
-
-  ssr: false,
 
   umami: {
     autoTrack: false,
