@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const errorString = computed(() => {
   if (!error.value) return ''
-  return (error.value as any).stack || (error.value as any).message
+  return (error.value as Error).stack || (error.value as Error).message
 })
 </script>
 
