@@ -44,7 +44,7 @@
     "@iconify-json/uil": "^1.2.3",
     "@iconify-json/vscode-icons": "^1.2.12",
     "@ntnyq/eslint-config": "^4.0.0-beta.2",
-    "@ntnyq/prettier-config": "^1.22.1",
+    "@ntnyq/prettier-config": "^2.0.0",
     "@nuxt/devtools": "latest",
     "@types/node": "^22.13.1",
     "@unocss/nuxt": "^65.4.3",
