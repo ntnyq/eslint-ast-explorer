@@ -21,7 +21,7 @@ export const jsoncESLint = defineParser<
   async version() {
     return (await this).meta.version!
   },
-  init: pkg => importSkypack(pkg),
+  init: () => import('#build/jsonc-eslint-parser'),
   parse(code, options) {
     return this.parseForESLint(code, options)
   },
