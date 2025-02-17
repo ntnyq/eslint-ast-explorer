@@ -66,7 +66,9 @@ const highlightRange = computed<LocRange | undefined>(() => {
   // )?.[0]
 })
 
-let decorationsCollection: Monaco.editor.IEditorDecorationsCollection | undefined
+let decorationsCollection:
+  | Monaco.editor.IEditorDecorationsCollection
+  | undefined
 
 function highlight() {
   decorationsCollection?.clear()
@@ -74,7 +76,9 @@ function highlight() {
   const range = highlightRange.value
   if (!range) return
 
-  const editor: Monaco.editor.IStandaloneCodeEditor | undefined = toRaw(containerRef.value?.$editor)
+  const editor: Monaco.editor.IStandaloneCodeEditor | undefined = toRaw(
+    containerRef.value?.$editor,
+  )
   if (!editor) return
 
   const start = editor.getModel()!.getPositionAt(range[0])

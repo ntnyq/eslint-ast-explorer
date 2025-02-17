@@ -3,7 +3,10 @@ import { importSkypack } from '~/utils/parser'
 import type * as YamlESLint from 'yaml-eslint-parser'
 import type { YamlESLintParseOptions } from '~/types'
 
-export const yamlESLint = defineParser<typeof YamlESLint, YamlESLintParseOptions>({
+export const yamlESLint = defineParser<
+  typeof YamlESLint,
+  YamlESLintParseOptions
+>({
   id: 'yaml-eslint-parser',
   label: 'yaml-eslint-parser',
   icon: '',
@@ -29,6 +32,9 @@ export const yaml = defineLanguage({
   label: 'YAML',
   // @unocss-include
   icon: 'i-vscode-icons:file-type-light-yaml',
-  parsers: [yamlESLint],
+  parsers: [
+    //
+    yamlESLint,
+  ],
   codeTemplate: yamlTemplate,
 })

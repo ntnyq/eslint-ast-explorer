@@ -25,6 +25,9 @@ export const javascript = defineLanguage({
   label: 'JavaScript',
   // @unocss-include
   icon: 'i-vscode-icons:file-type-js-official',
-  parsers: [esprima],
+  parsers: [
+    //
+    esprima,
+  ],
   codeTemplate: javascriptTemplate,
 })

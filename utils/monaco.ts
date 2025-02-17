@@ -1,5 +1,5 @@
-import themeDark from 'shiki/themes/dark-plus.mjs'
-import themeLight from 'shiki/themes/light-plus.mjs'
+import themeDark from '@shikijs/themes/dark-plus'
+import themeLight from '@shikijs/themes/light-plus'
 import type * as Monaco from 'monaco-editor'
 
 export function getSharedMonacoOptions() {
@@ -7,8 +7,9 @@ export function getSharedMonacoOptions() {
     automaticLayout: true,
     tabSize: 2,
     theme: isDark.value ? themeDark.name : themeLight.name,
-    // cSpell: disable-next-line
-    fontFamily: '"Cascadia Code", "Jetbrains Mono", "Fira Code", "Menlo", "Consolas", monospace',
+    fontFamily:
+      // cSpell: disable-next-line
+      '"Cascadia Code", "Jetbrains Mono", "Fira Code", "Menlo", "Consolas", monospace',
     minimap: {
       enabled: false,
     },

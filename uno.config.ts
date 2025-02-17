@@ -43,11 +43,13 @@ export default defineConfig({
 
       'bg-hover': 'bg-[#8881]',
       'border-base': 'border-gray:20',
-      'box-input': 'box-input-shell box-input-inner focus:(border-primary ring-2 ring-primary:20)',
-      'box-input-inner': 'px-2 py-1 outline-none w-full bg-base rounded-lg placeholder-gray:50',
-
       'color-base': 'text-#222 dark:text-#ddd',
       'flex-center': 'flex items-center justify-center',
+
+      'box-input':
+        'box-input-shell box-input-inner focus:(border-primary ring-2 ring-primary:20)',
+      'box-input-inner':
+        'px-2 py-1 outline-none w-full bg-base rounded-lg placeholder-gray:50',
       'box-input-shell':
         'bg-base border-base color-base border rounded-lg focus-within:(border-primary ring-2 ring-primary:20) disabled:(bg-gray:10 color-gray:50)',
     },
@@ -65,7 +67,7 @@ export default defineConfig({
 
   theme: {
     colors: {
-      primary: '#4b32c3',
+      primary: '#ffb22c',
     },
   },
 })

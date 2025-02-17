@@ -6,4 +6,6 @@ export interface SvelteESLintParseOptions {}
 
 export interface TomlESLintParseOptions {}
 
+export interface VueESLintParseOptions {}
+
 export interface YamlESLintParseOptions {}

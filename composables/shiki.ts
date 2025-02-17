@@ -1,16 +1,16 @@
-import { createHighlighterCoreSync } from 'shiki/core'
-import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
-import langAstro from 'shiki/langs/astro.mjs'
-import langCss from 'shiki/langs/css.mjs'
-import langHtml from 'shiki/langs/html.mjs'
-import langJson from 'shiki/langs/json.mjs'
-import langSvelte from 'shiki/langs/svelte.mjs'
-import langToml from 'shiki/langs/toml.mjs'
-import langTs from 'shiki/langs/typescript.mjs'
-import langVue from 'shiki/langs/vue.mjs'
-import langYaml from 'shiki/langs/yaml.mjs'
-import vitesseDark from 'shiki/themes/vitesse-dark.mjs'
-import vitesseLight from 'shiki/themes/vitesse-light.mjs'
+import { createHighlighterCoreSync } from '@shikijs/core'
+import { createJavaScriptRegexEngine } from '@shikijs/engine-javascript'
+import langAstro from '@shikijs/langs/astro'
+import langCss from '@shikijs/langs/css'
+import langHtml from '@shikijs/langs/html'
+import langJson from '@shikijs/langs/json'
+import langSvelte from '@shikijs/langs/svelte'
+import langToml from '@shikijs/langs/toml'
+import langTs from '@shikijs/langs/typescript'
+import langVue from '@shikijs/langs/vue'
+import langYaml from '@shikijs/langs/yaml'
+import vitesseDark from '@shikijs/themes/vitesse-dark'
+import vitesseLight from '@shikijs/themes/vitesse-light'
 
 export const shikiLangs = [
   langTs,
@@ -37,7 +37,9 @@ const highlight = useMemoize((code: string, theme: string) => {
   })
 })
 
-export function useHighlightColor(content: MaybeRefOrGetter<string | undefined>) {
+export function useHighlightColor(
+  content: MaybeRefOrGetter<string | undefined>,
+) {
   return computed(() => {
     const code = toValue(content)
     if (code == null) return ''

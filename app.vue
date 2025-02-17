@@ -1,7 +1,47 @@
+<script lang="ts" setup>
+import { META } from '~/constants'
+
+const title = META.appName
+const description = META.appDescription
+const url = META.appUrl
+
+// const ogImage = {
+//   url: '/og.png',
+//   width: 2560,
+//   height: 1280,
+//   type: 'image/png',
+// } as const
+
+useServerSeoMeta({
+  title,
+  description,
+  ogTitle: title,
+  ogDescription: description,
+  // ogImage,
+  ogUrl: url,
+  twitterTitle: title,
+  twitterDescription: description,
+  // twitterImage: ogImage,
+  // twitterCard: 'summary_large_image',
+  viewport: 'width=device-width, initial-scale=1',
+  appleMobileWebAppStatusBarStyle: 'black-translucent',
+})
+
+useServerHeadSafe({
+  htmlAttrs: {
+    lang: 'en',
+  },
+  link: [
+    //
+    { href: '/icon_48.png', rel: 'icon', type: 'image/png' },
+  ],
+})
+</script>
+
 <template>
-  <Suspense>
-    <main class="relative flex flex-col lg:h-screen">
-      <ClientOnly>
+  <ClientOnly>
+    <Suspense>
+      <main class="relative flex flex-col lg:h-screen">
         <Navbar class="border-b" />
 
         <div class="min-h-0 flex flex-1 flex-col gap-2 lg:flex-row">
@@ -16,14 +56,16 @@
             />
           </div>
         </div>
-      </ClientOnly>
-    </main>
+      </main>
 
-    <template #fallback>
-      <div class="h-screen flex flex-center gap-1 text-3xl font-bold">
-        <div class="i-ri:loader-4-fill animate-spin" />
-        Loading...
-      </div>
-    </template>
-  </Suspense>
+      <template #fallback>
+        <div class="h-screen flex flex-center">
+          <div class="flex gap-1 text-3xl font-bold">
+            <div class="i-ri:loader-4-fill animate-spin" />
+            <span>Loading...</span>
+          </div>
+        </div>
+      </template>
+    </Suspense>
+  </ClientOnly>
 </template>

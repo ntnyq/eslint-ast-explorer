@@ -2,7 +2,10 @@ import { tomlTemplate } from '~/constants/templates'
 import type * as TomlESLint from 'toml-eslint-parser'
 import type { TomlESLintParseOptions } from '~/types'
 
-export const tomlESLint = defineParser<typeof TomlESLint, TomlESLintParseOptions>({
+export const tomlESLint = defineParser<
+  typeof TomlESLint,
+  TomlESLintParseOptions
+>({
   id: 'toml-eslint-parser',
   label: 'toml-eslint-parser',
   icon: '',
@@ -28,6 +31,9 @@ export const toml = defineLanguage({
   label: 'TOML',
   // @unocss-include
   icon: 'i-vscode-icons:file-type-light-toml',
-  parsers: [tomlESLint],
+  parsers: [
+    //
+    tomlESLint,
+  ],
   codeTemplate: tomlTemplate,
 })

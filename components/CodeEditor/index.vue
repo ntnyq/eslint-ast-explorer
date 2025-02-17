@@ -12,11 +12,13 @@ const containerRef = useTemplateRef<{
   $editor: Monaco.editor.IStandaloneCodeEditor | undefined
 }>('containerRef')
 
-const options = computed<Monaco.editor.IStandaloneEditorConstructionOptions>(() => ({
-  ...getSharedMonacoOptions(),
-  fontSize: 14,
-  fontLigatures: true,
-}))
+const options = computed<Monaco.editor.IStandaloneEditorConstructionOptions>(
+  () => ({
+    ...getSharedMonacoOptions(),
+    fontSize: 14,
+    fontLigatures: true,
+  }),
+)
 
 if (props.input) {
   watch(

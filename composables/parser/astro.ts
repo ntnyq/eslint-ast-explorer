@@ -2,7 +2,10 @@ import { astroTemplate } from '~/constants/templates'
 import type * as AstroESLint from 'astro-eslint-parser'
 import type { AstroESLintParseOptions } from '~/types'
 
-export const astroESLint = defineParser<typeof AstroESLint, AstroESLintParseOptions>({
+export const astroESLint = defineParser<
+  typeof AstroESLint,
+  AstroESLintParseOptions
+>({
   id: 'astro-eslint-parser',
   label: 'astro-eslint-parser',
   icon: '',
@@ -28,6 +31,9 @@ export const astro = defineLanguage({
   label: 'Astro',
   // @unocss-include
   icon: 'i-vscode-icons:file-type-light-astro',
-  parsers: [astroESLint],
+  parsers: [
+    //
+    astroESLint,
+  ],
   codeTemplate: astroTemplate,
 })

@@ -3,5 +3,7 @@
 import { defineESLintConfig } from '@ntnyq/eslint-config'
 
 export default defineESLintConfig({
-  svgo: true,
+  importX: {
+    preferTypeScriptResolver: false,
+  },
 })

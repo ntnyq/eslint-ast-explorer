@@ -1,1 +1,8 @@
-export const locationKeyList = ['loc', 'start', 'end', 'span', 'range', 'position']
+export const locationKeyList = [
+  'loc',
+  'start',
+  'end',
+  'span',
+  'range',
+  'position',
+]

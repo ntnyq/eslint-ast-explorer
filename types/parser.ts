@@ -13,8 +13,6 @@ export interface Parser<C = unknown, O = unknown> {
 
   pkgName: string
 
-  version: string | ((this: C | Promise<C>, pkgName: string) => string | Promise<string>)
-
   gui?: AsyncComponentLoader
 
   versionOverridable?: boolean
@@ -36,4 +34,8 @@ export interface Parser<C = unknown, O = unknown> {
         defaultValueType?: 'javascript'
       }
   )
+
+  version:
+    | string
+    | ((this: C | Promise<C>, pkgName: string) => string | Promise<string>)
 }

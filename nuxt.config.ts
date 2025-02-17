@@ -3,8 +3,6 @@
  * @see https://nuxt.com/docs/api/configuration/nuxt-config
  */
 
-import { META } from './constants'
-
 export default defineNuxtConfig({
   compatibilityDate: '2025-02-06',
 
@@ -13,22 +11,6 @@ export default defineNuxtConfig({
   modules: ['@vueuse/nuxt', '@unocss/nuxt', 'nuxt-monaco-editor', 'nuxt-umami'],
 
   ssr: false,
-
-  app: {
-    head: {
-      link: [{ href: '/icon_48.png', rel: 'icon', type: 'image/png' }],
-      title: META.appName,
-      viewport: 'width=device-width,initial-scale=1',
-      htmlAttrs: {
-        lang: 'en',
-      },
-      meta: [
-        { content: 'width=device-width, initial-scale=1', name: 'viewport' },
-        { content: META.appDescription, name: 'description' },
-        { content: 'black-translucent', name: 'apple-mobile-web-app-status-bar-style' },
-      ],
-    },
-  },
 
   components: {
     dirs: [
@@ -50,6 +32,7 @@ export default defineNuxtConfig({
   ],
 
   experimental: {
+    appManifest: false,
     payloadExtraction: false,
     renderJsonPayloads: true,
     typedPages: true,
@@ -60,21 +43,37 @@ export default defineNuxtConfig({
   },
 
   imports: {
-    dirs: ['./composables', './composables/state', './composables/parser', './utils'],
     addons: {
       vueTemplate: true,
     },
+    dirs: [
+      './composables',
+      './composables/state',
+      './composables/parser',
+      './utils',
+    ],
   },
 
   nitro: {
+    preset: 'static',
     esbuild: {
       options: {
         target: 'esnext',
       },
     },
-    prerender: {
-      crawlLinks: false,
-      routes: ['/'],
+    routeRules: {
+      '/': {
+        prerender: true,
+      },
+      '/*': {
+        prerender: false,
+      },
+      '/200.html': {
+        prerender: true,
+      },
+      '/404.html': {
+        prerender: true,
+      },
     },
   },
 
