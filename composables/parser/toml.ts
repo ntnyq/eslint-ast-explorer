@@ -10,7 +10,7 @@ export const tomlESLint = defineParser<
   label: 'toml-eslint-parser',
   icon: '',
   link: 'https://github.com/ota-meshi/toml-eslint-parser',
-  editorLanguage: 'json',
+  editorLanguage: 'toml',
   pkgName: 'toml-eslint-parser',
   options: {
     configurable: true,

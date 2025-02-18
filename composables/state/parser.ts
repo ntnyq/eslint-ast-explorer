@@ -37,7 +37,6 @@ export const loading = ref<'load' | 'parse' | false>(false)
 export const code = ref('')
 export const ast = shallowRef<unknown>({})
 export const error = shallowRef<unknown>()
-export const rawOptions = ref('')
 export const parseCost = ref(0)
 export const editorCursor = ref(0)
 
@@ -86,8 +85,7 @@ export const parserContext = computedWithControl(parserModule, () => ({
   module: parserModule.value,
 }))
 
-if (import.meta.client) {
-  // watch code
+export function initParserModule() {
   watch(currentLanguage, language => {
     code.value = language.codeTemplate
   })
@@ -125,7 +123,11 @@ if (import.meta.client) {
 
         const t = window.performance.now()
 
-        ast.value = await currentParser.value.parse.call(ctx, code.value, {})
+        ast.value = await currentParser.value.parse.call(
+          ctx,
+          code.value,
+          parserOptions.value,
+        )
         parseCost.value = window.performance.now() - t
         error.value = null
       } catch (err: unknown) {

@@ -6,7 +6,7 @@ export const esprima = defineParser<typeof ESprima, any>({
   label: 'esprima',
   icon: '',
   link: 'https://github.com/jquery/esprima',
-  editorLanguage: 'json',
+  editorLanguage: 'javascript',
   pkgName: 'esprima',
   options: {
     configurable: true,

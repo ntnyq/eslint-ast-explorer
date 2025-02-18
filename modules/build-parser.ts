@@ -13,10 +13,10 @@ export default defineNuxtModule({
       getContents: () => buildESLintParser(logger, 'jsonc-eslint-parser'),
     })
 
-    // addTemplate({
-    //   filename: 'vue-eslint-parser',
-    //   getContents: () => buildESLintParser(logger, 'vue-eslint-parser'),
-    // })
+    addTemplate({
+      filename: 'vue-eslint-parser',
+      getContents: () => buildESLintParser(logger, 'vue-eslint-parser'),
+    })
 
     // addTemplate({
     //   filename: 'astro-eslint-parser',
@@ -25,10 +25,7 @@ export default defineNuxtModule({
 
     addTemplate({
       filename: 'svelte-eslint-parser',
-      getContents: () =>
-        buildESLintParser(logger, 'svelte-eslint-parser', {
-          replace: true,
-        }),
+      getContents: () => buildESLintParser(logger, 'svelte-eslint-parser'),
     })
   },
 })

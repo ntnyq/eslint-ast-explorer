@@ -34,6 +34,7 @@
     "esprima": "^4.0.1",
     "floating-vue": "^5.2.2",
     "json-to-ast": "^2.1.0",
+    "json5": "^2.2.3",
     "jsonc-eslint-parser": "^2.4.0",
     "svelte": "^5.20.1",
     "svelte-eslint-parser": "^0.43.0",

@@ -10,7 +10,7 @@ export const svelteESLint = defineParser<
   label: 'svelte-eslint-parser',
   icon: '',
   link: 'https://github.com/ota-meshi/svelte-eslint-parser',
-  editorLanguage: 'json',
+  editorLanguage: 'svelte',
   pkgName: 'svelte-eslint-parser',
   options: {
     configurable: true,

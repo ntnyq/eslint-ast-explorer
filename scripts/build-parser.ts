@@ -14,7 +14,6 @@ const CACHE_DIR = resolve(NUXT_CACHE_DIR)
 
 interface BuildESLintParserOptions {
   noCache?: boolean
-  replace?: boolean
 }
 
 export async function buildESLintParser(
@@ -44,6 +43,7 @@ export async function buildESLintParser(
     input: [ENTRY],
     write: false,
     platform: 'browser',
+    external: ['eslint'],
     resolve: {
       /// keep-sorted
       alias: {
@@ -56,6 +56,11 @@ export async function buildESLintParser(
         assert: 'unenv/runtime/mock/proxy',
         fs: 'unenv/runtime/mock/proxy',
         module: 'unenv/runtime/mock/proxy',
+        ...(parserPackage.startsWith('astro')
+          ? {
+              // module: 'unenv/runtime/node/module',
+            }
+          : {}),
         path: 'pathe',
       },
     },
@@ -74,7 +79,7 @@ export async function buildESLintParser(
           }
         },
       },
-      ...(options.replace
+      ...(parserPackage.startsWith('svelte')
         ? [
             Replace({
               exclude: [],
@@ -90,6 +95,19 @@ export async function buildESLintParser(
                 {
                   find: 'process.versions.node',
                   replacement: JSON.stringify(process.versions.node),
+                },
+              ],
+            }),
+          ]
+        : []),
+      ...(parserPackage.startsWith('vue')
+        ? [
+            Replace({
+              exclude: [],
+              values: [
+                {
+                  find: 'require.cache',
+                  replacement: JSON.stringify({}),
                 },
               ],
             }),

@@ -1,5 +1,4 @@
 import { vueTemplate } from '~/constants/templates'
-import { importSkypack } from '~/utils/parser'
 import type * as VueESLint from 'vue-eslint-parser'
 import type { VueESLintParseOptions } from '~/types'
 
@@ -8,18 +7,21 @@ export const vueESLint = defineParser<typeof VueESLint, VueESLintParseOptions>({
   label: 'vue-eslint-parser',
   icon: '',
   link: 'https://github.com/ota-meshi/vue-eslint-parser',
-  editorLanguage: 'yaml',
+  editorLanguage: 'vue',
   pkgName: 'vue-eslint-parser',
   options: {
     configurable: true,
     editorLanguage: 'json',
-    defaultValue: {},
+    defaultValue: {
+      sourceType: 'module',
+      allowImportExportEverywhere: true,
+    },
     defaultValueType: 'json5',
   },
   async version() {
     return (await this).meta.version!
   },
-  init: pkg => importSkypack(pkg),
+  init: () => import('#build/vue-eslint-parser'),
   parse(code, options) {
     return this.parseForESLint(code, options)
   },

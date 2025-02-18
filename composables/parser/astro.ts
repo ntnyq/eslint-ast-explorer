@@ -10,7 +10,7 @@ export const astroESLint = defineParser<
   label: 'astro-eslint-parser',
   icon: '',
   link: 'https://github.com/ota-meshi/astro-eslint-parser',
-  editorLanguage: 'json',
+  editorLanguage: 'astro',
   pkgName: 'astro-eslint-parser',
   options: {
     configurable: true,
