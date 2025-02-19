@@ -8,7 +8,7 @@ const language = computed<MonacoLanguage>(() => {
 </script>
 
 <template>
-  <div>
+  <div class="relative">
     <CodeEditor
       v-model="code"
       :language="language"
