@@ -37,7 +37,7 @@
     "json5": "^2.2.3",
     "jsonc-eslint-parser": "^2.4.0",
     "svelte": "^5.20.4",
-    "svelte-eslint-parser": "^0.43.0",
+    "svelte-eslint-parser": "^1.0.0",
     "toml-eslint-parser": "^0.10.0",
     "vue-eslint-parser": "^9.4.3",
     "yaml-eslint-parser": "^1.2.3"
