@@ -1,7 +1,7 @@
-onlyBuiltDependencies:
-  - esbuild
-  - '@parcel/watcher'
-overrides:
-  esbuild: ^0.25.0
 packages:
   - .
+overrides:
+  esbuild: ^0.25.0
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - esbuild
