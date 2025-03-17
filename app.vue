@@ -12,30 +12,32 @@ const url = META.appUrl
 //   type: 'image/png',
 // } as const
 
-useServerSeoMeta({
-  title,
-  description,
-  ogTitle: title,
-  ogDescription: description,
-  // ogImage,
-  ogUrl: url,
-  twitterTitle: title,
-  twitterDescription: description,
-  // twitterImage: ogImage,
-  // twitterCard: 'summary_large_image',
-  viewport: 'width=device-width, initial-scale=1',
-  appleMobileWebAppStatusBarStyle: 'black-translucent',
-})
+if (import.meta.server) {
+  useSeoMeta({
+    title,
+    description,
+    ogTitle: title,
+    ogDescription: description,
+    // ogImage,
+    ogUrl: url,
+    twitterTitle: title,
+    twitterDescription: description,
+    // twitterImage: ogImage,
+    // twitterCard: 'summary_large_image',
+    viewport: 'width=device-width, initial-scale=1',
+    appleMobileWebAppStatusBarStyle: 'black-translucent',
+  })
 
-useServerHeadSafe({
-  htmlAttrs: {
-    lang: 'en',
-  },
-  link: [
-    //
-    { href: '/icon_48.png', rel: 'icon', type: 'image/png' },
-  ],
-})
+  useHeadSafe({
+    htmlAttrs: {
+      lang: 'en',
+    },
+    link: [
+      //
+      { href: '/icon_48.png', rel: 'icon', type: 'image/png' },
+    ],
+  })
+}
 </script>
 
 <template>

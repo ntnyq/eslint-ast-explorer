@@ -122,5 +122,6 @@ export async function buildESLintParser(
   logger.success(
     `Built ${parserPackage} in ${Math.round(performance.now() - t)}ms`,
   )
+
   return text
 }
