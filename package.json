@@ -53,7 +53,7 @@
     "@nuxt/devtools": "latest",
     "@types/node": "^22.13.10",
     "@unocss/nuxt": "^66.1.0-beta.3",
-    "@vueuse/nuxt": "^12.8.2",
+    "@vueuse/nuxt": "^13.0.0",
     "bumpp": "^10.0.3",
     "consola": "^3.4.0",
     "eslint": "^9.22.0",
