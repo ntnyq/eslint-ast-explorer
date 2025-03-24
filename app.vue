@@ -61,11 +61,8 @@ if (import.meta.server) {
       </main>
 
       <template #fallback>
-        <div class="h-screen flex flex-center">
-          <div class="flex gap-1 text-3xl font-bold">
-            <div class="i-ri:loader-4-fill animate-spin" />
-            <span>Loading...</span>
-          </div>
+        <div class="relative h-screen">
+          <Loading />
         </div>
       </template>
     </Suspense>

@@ -56,11 +56,11 @@ export async function buildESLintParser(
         assert: 'unenv/runtime/mock/proxy',
         fs: 'unenv/runtime/mock/proxy',
         module: 'unenv/runtime/mock/proxy',
-        ...(parserPackage.startsWith('astro')
-          ? {
-              // module: 'unenv/runtime/node/module',
-            }
-          : {}),
+        // ...(parserPackage.startsWith('astro')
+        //   ? {
+        //       module: 'unenv/runtime/node/module',
+        //     }
+        //   : {}),
         path: 'pathe',
       },
     },

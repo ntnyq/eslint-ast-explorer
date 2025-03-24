@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { META } from '~/constants'
-import { version } from '~/package.json'
+import { repository, version } from '~/package.json'
 
 // const disableOverrideVersion = computed(() => !currentParser.value.versionOverridable)
 </script>
@@ -36,8 +36,8 @@ import { version } from '~/package.json'
           icon="i-ri:book-2-line"
         />
         <IconButton
+          :to="`https://github.com/${repository}`"
           title="GitHub"
-          to="https://github.com/ntnyq/eslint-ast-explorer"
           icon="i-ri:github-line "
         />
         <DarkToggle />

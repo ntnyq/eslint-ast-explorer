@@ -14,11 +14,12 @@ function changeLanguage(language: Language) {
     class="flex"
   >
     <button
-      class="flex flex-center gap-1"
+      class="flex-center gap-1 px-10px"
       type="button"
     >
       <div :class="currentLanguage.icon" />
-      {{ currentLanguage.label }}
+      <span class="font-semibold">{{ currentLanguage.label }}</span>
+      <div class="i-lucide:chevron-down op-50" />
     </button>
 
     <template #popper>

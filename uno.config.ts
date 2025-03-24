@@ -44,7 +44,9 @@ export default defineConfig({
       'bg-hover': 'bg-[#8881]',
       'border-base': 'border-gray:20',
       'color-base': 'text-#222 dark:text-#ddd',
+
       'flex-center': 'flex items-center justify-center',
+      'wh-full': 'w-full h-full',
 
       'box-input':
         'box-input-shell box-input-inner focus:(border-primary ring-2 ring-primary:20)',
