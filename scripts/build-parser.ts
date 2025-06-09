@@ -71,7 +71,9 @@ export async function buildESLintParser(
       {
         name: ENTRY,
         resolveId(id) {
-          if (id === ENTRY) return id
+          if (id === ENTRY) {
+            return id
+          }
         },
         load(id) {
           if (id === ENTRY) {

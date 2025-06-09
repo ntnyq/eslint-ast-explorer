@@ -17,7 +17,9 @@ const serialized = computed(() => {
     return JSON.stringify(
       ast.value,
       (key: string, value: unknown) => {
-        if (hideEmptyKeys.value && value == null) return
+        if (hideEmptyKeys.value && value == null) {
+          return
+        }
         if (
           [
             ...(hideLocationData.value ? locationKeyList : []),
@@ -26,8 +28,12 @@ const serialized = computed(() => {
         ) {
           return
         }
-        if (typeof value === 'function') return `function ${value.name}(...)`
-        if (typeof value === 'bigint') return `(BigInt) ${value}n`
+        if (typeof value === 'function') {
+          return `function ${value.name}(...)`
+        }
+        if (typeof value === 'bigint') {
+          return `(BigInt) ${value}n`
+        }
 
         if (seen.has(value)) {
           return seen.get(value)
@@ -74,12 +80,16 @@ function highlight() {
   decorationsCollection?.clear()
 
   const range = highlightRange.value
-  if (!range) return
+  if (!range) {
+    return
+  }
 
   const editor: Monaco.editor.IStandaloneCodeEditor | undefined = toRaw(
     containerRef.value?.$editor,
   )
-  if (!editor) return
+  if (!editor) {
+    return
+  }
 
   const start = editor.getModel()!.getPositionAt(range[0])
   const end = editor.getModel()!.getPositionAt(range[1])
@@ -92,7 +102,9 @@ function highlight() {
       },
     },
   ])
-  if (autoFocus.value) editor.revealPositionNearTop(start)
+  if (autoFocus.value) {
+    editor.revealPositionNearTop(start)
+  }
 }
 
 watch(

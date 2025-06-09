@@ -118,7 +118,9 @@ export function initParserModule() {
 
         const ctx = await parserModulePromise.value
 
-        if (currentParser.value.id !== id) return
+        if (currentParser.value.id !== id) {
+          return
+        }
         loading.value = 'parse'
 
         const t = window.performance.now()

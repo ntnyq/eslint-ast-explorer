@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 const errorString = computed(() => {
-  if (!error.value) return ''
+  if (!error.value) {
+    return ''
+  }
   return (error.value as Error).stack || (error.value as Error).message
 })
 </script>

@@ -42,7 +42,9 @@ export function useHighlightColor(
 ) {
   return computed(() => {
     const code = toValue(content)
-    if (code == null) return ''
+    if (code == null) {
+      return ''
+    }
     const theme = `vitesse-${isDark.value ? 'dark' : 'light'}`
     const result = highlight(code, theme)
     let idx = 0

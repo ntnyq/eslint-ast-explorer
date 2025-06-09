@@ -24,7 +24,9 @@ if (props.input) {
   watch(
     () => containerRef.value?.$editor,
     editor => {
-      if (!editor) return
+      if (!editor) {
+        return
+      }
 
       editor.onDidChangeCursorPosition(evt => {
         editorCursor.value = editor.getModel()!.getOffsetAt(evt.position)

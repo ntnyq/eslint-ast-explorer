@@ -12,6 +12,7 @@ export default defineNuxtPlugin({
     monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
       noEmit: true,
       esModuleInterop: true,
+      resolveJsonModule: true,
       allowNonTsExtensions: true,
       jsx: monaco.languages.typescript.JsxEmit.Preserve,
       module: monaco.languages.typescript.ModuleKind.ESNext,
