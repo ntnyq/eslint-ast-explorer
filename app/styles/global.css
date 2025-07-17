@@ -9,7 +9,7 @@ body,
 body {
   background-color: var(--c-bg-base);
   color: var(--c-text-base);
-  --uno: 'font-sans';
+  --uno: "font-sans";
 }
 
 /* Scrollbar */

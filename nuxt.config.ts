@@ -4,7 +4,7 @@
  */
 
 export default defineNuxtConfig({
-  compatibilityDate: '2025-02-06',
+  compatibilityDate: '2025-07-15',
 
   devtools: { enabled: true },
 
@@ -36,10 +36,6 @@ export default defineNuxtConfig({
     payloadExtraction: false,
     renderJsonPayloads: true,
     typedPages: true,
-  },
-
-  future: {
-    compatibilityVersion: 4,
   },
 
   imports: {

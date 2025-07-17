@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { META } from '~/constants'
-import { repository, version } from '~/package.json'
+import { repository, version } from '../../../package.json'
 
 // const disableOverrideVersion = computed(() => !currentParser.value.versionOverridable)
 </script>
