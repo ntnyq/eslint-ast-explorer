@@ -16,9 +16,9 @@ const isExternalLink = computed(
   <component
     v-tooltip="title"
     :is="to ? NuxtLink : 'button'"
-    :to="to"
+    :to
     :target="isExternalLink ? '_blank' : undefined"
-    :title="title"
+    :title
     :aria-label="title"
     :type="to ? undefined : 'button'"
     class="icon-button aspect-ratio-1 flex-none rounded-full p-1 @hover:bg-primary/15 @hover:color-primary dark:@hover:bg-primary/30"

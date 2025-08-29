@@ -125,7 +125,7 @@ onMounted(() => {
 <template>
   <MonacoEditor
     ref="containerRef"
-    :options="options"
+    :options
     :model-value="serialized"
     lang="json"
   />
