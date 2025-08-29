@@ -44,7 +44,7 @@ if (props.input) {
     v-model="code"
     ref="containerRef"
     :lang="language"
-    :options="options"
+    :options
   >
     <div class="h-full w-full flex flex-center flex-col gap-2">
       <div class="i-ri:loader-2-line animate-spin text-4xl" />
