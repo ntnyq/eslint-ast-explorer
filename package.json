@@ -57,7 +57,7 @@
     "@rolldown/plugin-node-polyfills": "^1.0.0",
     "@types/node": "^24.2.1",
     "@unocss/nuxt": "^66.4.2",
-    "@vueuse/nuxt": "^13.6.0",
+    "@vueuse/nuxt": "^14.0.0",
     "bumpp": "^10.2.2",
     "consola": "^3.4.2",
     "eslint": "^9.33.0",
