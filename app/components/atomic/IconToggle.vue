@@ -14,7 +14,7 @@ const isChecked = defineModel<boolean>('modelValue')
       isChecked ? 'color-primary op-100' : 'op-40',
       activeClass ? { [activeClass]: isChecked } : null,
     ]"
-    :icon="icon"
+    :icon
     class="icon-toggle @hover:color-inherit @hover:op-100"
   />
 </template>

@@ -1,7 +1,9 @@
+// import type * as Monaco from 'monaco-editor'
+
 export default defineNuxtPlugin({
   name: 'monaco',
-  setup() {
-    const monaco = useMonaco()!
+  async setup() {
+    const monaco = await useMonaco()!
 
     monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
       allowComments: true,

@@ -2,7 +2,7 @@
 import { locationKeyList } from '~/constants/parser'
 import type * as Monaco from 'monaco-editor'
 
-const monaco = useMonaco()!
+const monaco = await useMonaco()!
 const containerRef = useTemplateRef('containerRef')
 
 const options = computed(() => ({
@@ -125,7 +125,7 @@ onMounted(() => {
 <template>
   <MonacoEditor
     ref="containerRef"
-    :options="options"
+    :options
     :model-value="serialized"
     lang="json"
   />

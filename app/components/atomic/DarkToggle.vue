@@ -50,7 +50,7 @@ function toggleDark(evt: MouseEvent) {
 <template>
   <ActionButton
     @click="toggleDark"
-    :type="type"
+    :type
     :title="isDark ? 'Dark Mode' : 'Light Mode'"
     icon="i-uil:sun dark:i-uil:moon"
   />

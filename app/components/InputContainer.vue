@@ -11,7 +11,7 @@ const language = computed<MonacoLanguage>(() => {
   <div class="relative">
     <CodeEditor
       v-model="code"
-      :language="language"
+      :language
       class="h-full w-full"
     />
   </div>

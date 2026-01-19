@@ -4,11 +4,12 @@ import { shikiToMonaco } from '@shikijs/monaco'
 import themeDark from '@shikijs/themes/dark-plus'
 import themeLight from '@shikijs/themes/light-plus'
 import { shikiLangs } from '~/composables/shiki'
+import type * as Monaco from 'monaco-editor'
 
 export default defineNuxtPlugin({
   name: 'shiki',
-  setup() {
-    const monaco = useMonaco()!
+  async setup() {
+    const monaco: typeof Monaco = await useMonaco()!
 
     monaco.languages.register({ id: 'vue' })
     monaco.languages.register({ id: 'svelte' })
