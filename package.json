@@ -36,7 +36,7 @@
     "floating-vue": "^5.2.2",
     "json-to-ast": "^2.1.0",
     "json5": "^2.2.3",
-    "jsonc-eslint-parser": "^2.4.2",
+    "jsonc-eslint-parser": "^3.1.0",
     "monaco-editor": "^0.55.1",
     "svelte": "^5.53.3",
     "svelte-eslint-parser": "^1.4.1",
