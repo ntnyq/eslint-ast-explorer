@@ -6,9 +6,9 @@ defineProps<{
 const isDark = useDark()
 
 const isViewTransitionSupported =
-  typeof document !== 'undefined'
-  && !!document.startViewTransition
-  && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  typeof document !== 'undefined' &&
+  !!document.startViewTransition &&
+  !window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 function toggleDark(evt: MouseEvent) {
   if (!isViewTransitionSupported || !evt) {

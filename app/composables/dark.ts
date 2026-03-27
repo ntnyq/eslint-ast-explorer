@@ -5,9 +5,9 @@
 export const isDark = useDark()
 
 const supportViewTransition =
-  typeof document !== 'undefined'
-  && !!document.startViewTransition
-  && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  typeof document !== 'undefined' &&
+  !!document.startViewTransition &&
+  !window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 /**
  * Credit to [@hooray](https://github.com/hooray)
@@ -41,6 +41,7 @@ export function toggleDark(event?: MouseEvent) {
       },
       {
         duration: 400,
+        fill: 'forwards',
         easing: 'ease-in',
         pseudoElement: isDark.value
           ? '::view-transition-old(root)'

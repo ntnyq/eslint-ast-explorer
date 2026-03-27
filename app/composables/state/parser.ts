@@ -52,12 +52,12 @@ export const currentLanguage = computed(
 
 export const currentParser = computed(
   () =>
-    (currentLanguage.value
-      && currentParserId.value
-      && currentLanguage.value.parsers.find(
+    (currentLanguage.value &&
+      currentParserId.value &&
+      currentLanguage.value.parsers.find(
         p => p.id === currentParserId.value,
-      ))
-    || Object.values(currentLanguage.value.parsers)[0]!,
+      )) ||
+    Object.values(currentLanguage.value.parsers)[0]!,
 )
 
 code.value = currentLanguage.value.codeTemplate
@@ -94,10 +94,8 @@ export function initParserModule() {
     [currentLanguage, currentParserId],
     () => {
       if (
-        !currentParserId.value
-        || !currentLanguage.value.parsers.some(
-          p => p.id === currentParserId.value,
-        )
+        !currentParserId.value ||
+        !currentLanguage.value.parsers.some(p => p.id === currentParserId.value)
       ) {
         setParserId(currentLanguage.value.parsers[0]?.id || '')
       }

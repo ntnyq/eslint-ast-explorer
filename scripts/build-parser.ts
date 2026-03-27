@@ -50,12 +50,12 @@ export async function buildESLintParser(
         'fs/promises': 'unenv/runtime/mock/proxy',
         'node:fs': 'unenv/runtime/mock/proxy',
         'node:fs/promises': 'unenv/runtime/mock/proxy',
-        'node:module': 'unenv/runtime/node/module',
+        'node:module': 'unenv/runtime/node/module/index',
         'node:path': 'pathe',
         'node:util': 'unenv/runtime/mock/proxy',
         assert: 'unenv/runtime/mock/proxy',
         fs: 'unenv/runtime/mock/proxy',
-        module: 'unenv/runtime/mock/proxy',
+        module: 'unenv/runtime/node/module/index',
         // ...(parserPackage.startsWith('astro')
         //   ? {
         //       module: 'unenv/runtime/node/module',

@@ -3,14 +3,16 @@
  * @see https://nuxt.com/docs/api/configuration/nuxt-config
  */
 
-export default defineNuxtConfig({
-  compatibilityDate: '2025-07-15',
+import process from 'node:process'
 
-  devtools: { enabled: true },
+const isProduction = process.env.NODE_ENV === 'production'
+
+export default defineNuxtConfig({
+  compatibilityDate: '2025-01-01',
 
   modules: ['@vueuse/nuxt', '@unocss/nuxt', 'nuxt-monaco-editor', 'nuxt-umami'],
 
-  ssr: false,
+  ssr: !isProduction,
 
   components: {
     dirs: [
@@ -31,11 +33,16 @@ export default defineNuxtConfig({
     '~/styles/global.css',
   ],
 
+  devtools: {
+    enabled: false,
+  },
+
   experimental: {
     appManifest: false,
     payloadExtraction: false,
     renderJsonPayloads: true,
     typedPages: true,
+    viteEnvironmentApi: false,
   },
 
   imports: {
@@ -51,26 +58,28 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: 'static',
+    preset: isProduction ? 'static' : undefined,
     esbuild: {
       options: {
         target: 'esnext',
       },
     },
-    routeRules: {
-      '/': {
-        prerender: true,
-      },
-      '/*': {
-        prerender: false,
-      },
-      '/200.html': {
-        prerender: true,
-      },
-      '/404.html': {
-        prerender: true,
-      },
-    },
+    routeRules: isProduction
+      ? {
+          '/': {
+            prerender: true,
+          },
+          '/*': {
+            prerender: false,
+          },
+          '/200.html': {
+            prerender: true,
+          },
+          '/404.html': {
+            prerender: true,
+          },
+        }
+      : {},
   },
 
   umami: {
@@ -84,6 +93,29 @@ export default defineNuxtConfig({
   vite: {
     esbuild: {
       legalComments: 'external',
+    },
+
+    optimizeDeps: {
+      include: [
+        'floating-vue',
+        '@shikijs/core',
+        '@shikijs/engine-javascript',
+        '@shikijs/monaco',
+        '@shikijs/themes/dark-plus',
+        '@shikijs/themes/light-plus',
+        'json5',
+        '@shikijs/langs/astro',
+        '@shikijs/langs/css',
+        '@shikijs/langs/html',
+        '@shikijs/langs/json',
+        '@shikijs/langs/svelte',
+        '@shikijs/langs/toml',
+        '@shikijs/langs/typescript',
+        '@shikijs/langs/vue',
+        '@shikijs/langs/yaml',
+        '@shikijs/themes/vitesse-dark',
+        '@shikijs/themes/vitesse-light',
+      ],
     },
 
     resolve: {

@@ -16,3 +16,26 @@ export function getSharedMonacoOptions() {
   }
   return options
 }
+
+export function configureMonacoDefaults(monaco: typeof Monaco | undefined) {
+  if (!monaco) {
+    return
+  }
+
+  monaco.json.jsonDefaults.setDiagnosticsOptions({
+    allowComments: true,
+    enableSchemaRequest: true,
+    trailingCommas: 'ignore',
+  })
+
+  monaco.typescript.typescriptDefaults.setCompilerOptions({
+    noEmit: true,
+    esModuleInterop: true,
+    resolveJsonModule: true,
+    allowNonTsExtensions: true,
+    jsx: monaco.typescript.JsxEmit.Preserve,
+    module: monaco.typescript.ModuleKind.ESNext,
+    target: monaco.typescript.ScriptTarget.ESNext,
+    moduleResolution: monaco.typescript.ModuleResolutionKind.NodeJs,
+  })
+}

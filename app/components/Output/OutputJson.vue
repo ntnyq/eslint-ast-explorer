@@ -2,7 +2,7 @@
 import { locationKeyList } from '~/constants/parser'
 import type * as Monaco from 'monaco-editor'
 
-const monaco = await useMonaco()!
+const monaco: typeof Monaco = await useMonaco()!
 const containerRef = useTemplateRef('containerRef')
 
 const options = computed(() => ({
