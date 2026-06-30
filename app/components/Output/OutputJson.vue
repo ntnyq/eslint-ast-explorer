@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { locationKeyList } from '~/constants/parser'
+import { serializeAst } from '~/utils/ast-serializer'
 import type * as Monaco from 'monaco-editor'
 
 const monaco: typeof Monaco = await useMonaco()!
@@ -13,51 +13,12 @@ const options = computed(() => ({
 
 const serialized = computed(() => {
   try {
-    const seen = new WeakMap<any, unknown>()
-    return JSON.stringify(
-      ast.value,
-      (key: string, value: unknown) => {
-        if (hideEmptyKeys.value && value == null) {
-          return
-        }
-        if (
-          [
-            ...(hideLocationData.value ? locationKeyList : []),
-            ...hideKeys.value.filter(v => !!v),
-            ...(currentParser.value.hideKeys || []),
-          ].includes(key)
-        ) {
-          return
-        }
-        if (typeof value === 'function') {
-          return `function ${value.name}(...)`
-        }
-        if (typeof value === 'bigint') {
-          return `(BigInt) ${value}n`
-        }
-        if (isRegExp(value)) {
-          return `(RegExp) ${value}`
-        }
-
-        if (seen.has(value)) {
-          return seen.get(value)
-        }
-
-        if (value !== null && typeof value === 'object') {
-          let newValue: any
-          try {
-            JSON.stringify(value)
-            newValue = value
-          } catch {
-            newValue = `(circular: ${key || '#root'})`
-          }
-          seen.set(value, newValue)
-        }
-
-        return value
-      },
-      2,
-    )
+    return serializeAst(ast.value, {
+      hideEmptyKeys: hideEmptyKeys.value,
+      hideKeys: hideKeys.value,
+      hideLocationData: hideLocationData.value,
+      parserHideKeys: currentParser.value.hideKeys || [],
+    })
   } catch (err) {
     console.error(err)
     error.value = err
@@ -173,6 +134,11 @@ watch(
 onMounted(() => {
   highlight()
   highlightSearch()
+})
+
+onBeforeUnmount(() => {
+  decorationsCollection?.clear()
+  searchDecorationsCollection?.clear()
 })
 </script>
 

@@ -5,9 +5,6 @@ const PREFIX = 'eslint-ast-explorer:'
 const TRUE = true as boolean
 const FALSE = false as boolean
 
-export const showSidebar = useLocalStorage(`${PREFIX}show-sidebar`, TRUE)
-export const toggleShowSidebar = useToggle(showSidebar)
-
 export const showInputContainer = useLocalStorage(
   `${PREFIX}show-input-container`,
   TRUE,

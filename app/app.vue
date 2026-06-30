@@ -60,12 +60,12 @@ if (import.meta.server) {
             />
           </div>
         </div>
-      </main>
 
-      <ParserOptionsDialog />
-      <ParserVersionDialog />
-      <EditorSettingsDialog />
-      <AstTreeStyleDialog />
+        <ParserOptionsDialog />
+        <ParserVersionDialog />
+        <EditorSettingsDialog />
+        <AstTreeStyleDialog />
+      </main>
 
       <template #fallback>
         <div class="bg-background relative h-screen">

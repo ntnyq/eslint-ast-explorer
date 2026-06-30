@@ -47,7 +47,9 @@ export const currentParserId = ref<string | undefined>()
 
 export const overrideVersion = ref<string>()
 export const displayVersion = ref<string>()
+export const parserVersionError = shallowRef<string>()
 export const isUrlVersion = computed(() => isUrl(overrideVersion.value || ''))
+const userApprovedUrlVersion = shallowRef<string>()
 
 export const currentLanguage = computed(
   () => LANGUAGES[currentLanguageId.value] || LANGUAGES.javascript,
@@ -66,8 +68,29 @@ export const currentParser = computed(
 code.value = currentLanguage.value.codeTemplate
 
 export function setParserId(id: string) {
-  overrideVersion.value = undefined
+  clearOverrideVersion()
   currentParserId.value = id
+}
+
+export function setOverrideVersion(version?: string) {
+  const nextVersion = version?.trim() || undefined
+
+  overrideVersion.value = nextVersion
+  userApprovedUrlVersion.value =
+    nextVersion && isUrl(nextVersion) ? nextVersion : undefined
+}
+
+export function restoreOverrideVersion(version?: string) {
+  const nextVersion = version?.trim() || undefined
+
+  overrideVersion.value =
+    nextVersion && !isUrl(nextVersion) ? nextVersion : undefined
+  userApprovedUrlVersion.value = undefined
+}
+
+export function clearOverrideVersion() {
+  overrideVersion.value = undefined
+  userApprovedUrlVersion.value = undefined
 }
 
 const parserModuleCache: Record<string, unknown> = Object.create(null)
@@ -81,6 +104,9 @@ async function initParser() {
     return parserModuleCache[pkgId]
   }
   if (isUrlVersion.value) {
+    if (userApprovedUrlVersion.value !== pkgId) {
+      throw new Error('Remote parser URLs must be applied manually')
+    }
     return (parserModuleCache[pkgId] = await importUrl(pkgId))
   }
   return (parserModuleCache[pkgId] = await init?.(pkgId))
@@ -161,29 +187,42 @@ export function initParserModule() {
     [currentParserId, overrideVersion],
     async () => {
       const parser = currentParser.value
+      parserVersionError.value = undefined
 
-      if (overrideVersion.value) {
-        displayVersion.value = overrideVersion.value
-        if (!isUrlVersion.value) {
-          displayVersion.value = await fetchVersion(
-            `${parser.pkgName}@${overrideVersion.value}`,
-          )
+      try {
+        if (overrideVersion.value) {
+          displayVersion.value = overrideVersion.value
+          if (!isUrlVersion.value) {
+            const version = await fetchVersion(
+              `${parser.pkgName}@${overrideVersion.value}`,
+            )
+            if (currentParser.value.id === parser.id) {
+              displayVersion.value = version
+            }
+          }
+          return
         }
-        return
-      }
 
-      if (typeof parser.version === 'string') {
-        displayVersion.value = parser.version
-        return
-      }
+        if (typeof parser.version === 'string') {
+          displayVersion.value = parser.version
+          return
+        }
 
-      displayVersion.value = ''
-      const version = await Promise.resolve(
-        parser.version.call(parserModulePromise.value, parser.pkgName),
-      )
+        displayVersion.value = ''
+        const version = await Promise.resolve(
+          parser.version.call(parserModulePromise.value, parser.pkgName),
+        )
 
-      if (currentParser.value.id === parser.id) {
-        displayVersion.value = version
+        if (currentParser.value.id === parser.id) {
+          displayVersion.value = version
+        }
+      } catch (err) {
+        console.error(err)
+        if (currentParser.value.id === parser.id) {
+          parserVersionError.value =
+            err instanceof Error ? err.message : String(err)
+          displayVersion.value = overrideVersion.value || ''
+        }
       }
     },
     {

@@ -28,13 +28,13 @@ watch(
 )
 
 function applyVersion() {
-  overrideVersion.value = versionValue.value.trim() || undefined
+  setOverrideVersion(versionValue.value)
   open.value = false
 }
 
 function resetVersion() {
   versionValue.value = ''
-  overrideVersion.value = undefined
+  clearOverrideVersion()
 }
 </script>
 
@@ -69,6 +69,12 @@ function resetVersion() {
             <span class="text-muted-foreground">Current</span>
             <span class="font-mono">{{ displayVersion || '-' }}</span>
           </div>
+          <p
+            v-if="parserVersionError"
+            class="text-destructive text-xs"
+          >
+            {{ parserVersionError }}
+          </p>
           <a
             v-if="packageUrl"
             :href="packageUrl"

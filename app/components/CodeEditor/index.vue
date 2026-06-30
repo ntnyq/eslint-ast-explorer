@@ -26,15 +26,19 @@ if (props.input) {
   let hoverDecorationsCollection:
     | Monaco.editor.IEditorDecorationsCollection
     | undefined
+  let cursorPositionListener: Monaco.IDisposable | undefined
 
   watch(
     () => containerRef.value?.$editor,
     editor => {
+      cursorPositionListener?.dispose()
+      cursorPositionListener = undefined
+
       if (!editor) {
         return
       }
 
-      editor.onDidChangeCursorPosition(evt => {
+      cursorPositionListener = editor.onDidChangeCursorPosition(evt => {
         editorCursor.value = editor.getModel()!.getOffsetAt(evt.position)
       })
     },
@@ -75,6 +79,11 @@ if (props.input) {
       flush: 'post',
     },
   )
+
+  onBeforeUnmount(() => {
+    cursorPositionListener?.dispose()
+    hoverDecorationsCollection?.clear()
+  })
 }
 </script>
 

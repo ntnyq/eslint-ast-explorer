@@ -1,5 +1,29 @@
 <script lang="ts" setup>
 import { Network, Palette } from '@lucide/vue'
+import { createAstTreeIndex } from '~/utils/ast-tree-index'
+
+const treeIndex = computed(() =>
+  createAstTreeIndex({
+    cursor: editorCursor.value,
+    getRange,
+    nodeTitleFor: value => {
+      if (typeof currentParser.value.nodeTitle === 'function') {
+        return currentParser.value.nodeTitle.call(undefined, value)
+      }
+
+      const titleKey = currentParser.value.nodeTitle || 'type'
+      if (!value || typeof value !== 'object') {
+        return
+      }
+
+      const title = (value as Record<string, unknown>)[titleKey]
+      return typeof title === 'string' ? title : undefined
+    },
+    root: ast.value,
+    searchQuery: outputSearch.value,
+    shouldHideKey: (key, value) => !!shouldHideKey(key, true, value),
+  }),
+)
 
 function openAstTreeStyles() {
   showAstTreeStylesDialog.value = true
@@ -28,6 +52,7 @@ function openAstTreeStyles() {
     >
       <AstTreeNode
         :value="ast"
+        :tree-index
         root
         open
       />
