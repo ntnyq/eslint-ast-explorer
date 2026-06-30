@@ -168,13 +168,13 @@ function resetSettings() {
             class="bg-muted/40 flex items-center justify-between gap-3 rounded-md border px-3 py-2"
           >
             <span class="text-sm font-medium">Minimap</span>
-            <Switch v-model:checked="minimapEnabled" />
+            <Switch v-model="minimapEnabled" />
           </label>
           <label
             class="bg-muted/40 flex items-center justify-between gap-3 rounded-md border px-3 py-2"
           >
             <span class="text-sm font-medium">Ligatures</span>
-            <Switch v-model:checked="fontLigatures" />
+            <Switch v-model="fontLigatures" />
           </label>
         </div>
 

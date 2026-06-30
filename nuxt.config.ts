@@ -100,6 +100,7 @@ export default defineNuxtConfig({
 
     optimizeDeps: {
       include: [
+        '@lucide/vue',
         '@shikijs/core',
         '@shikijs/engine-javascript',
         '@shikijs/langs/astro',
@@ -118,8 +119,8 @@ export default defineNuxtConfig({
         '@shikijs/themes/vitesse-light',
         'class-variance-authority',
         'clsx',
+        'json-to-ast', // CJS
         'json5',
-        '@lucide/vue',
         'reka-ui',
         'tailwind-merge',
       ],

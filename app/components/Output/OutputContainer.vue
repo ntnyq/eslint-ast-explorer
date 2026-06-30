@@ -76,19 +76,19 @@ function printAst() {
       <div class="flex flex-wrap items-center gap-3 text-sm">
         <label class="flex items-center gap-2 whitespace-nowrap">
           <Switch
-            @update:checked="toggleAutoFocus"
-            :checked="autoFocus"
+            @update:model-value="toggleAutoFocus"
+            :model-value="autoFocus"
           />
           <span>Auto focus</span>
         </label>
         <label class="flex items-center gap-2 whitespace-nowrap">
-          <Switch v-model:checked="hideEmptyKeysValue" />
+          <Switch v-model="hideEmptyKeysValue" />
           <span>Empty keys</span>
         </label>
         <label class="flex items-center gap-2 whitespace-nowrap">
           <Switch
-            @update:checked="toggleHideLocationData"
-            :checked="hideLocationData"
+            @update:model-value="toggleHideLocationData"
+            :model-value="hideLocationData"
           />
           <span>Location</span>
         </label>

@@ -22,6 +22,9 @@
     "javascriptreact",
     "typescriptreact"
   ],
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
   "cSpell.allowCompoundWords": true,
   "cSpell.words": [
     "bumpp",
@@ -35,6 +38,7 @@
     "nuxt",
     "nuxter",
     "nuxtjs",
+    "oklch",
     "oxfmt",
     "pathe",
     "reka",

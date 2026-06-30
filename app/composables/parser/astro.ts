@@ -1,3 +1,4 @@
+import { eslintParseResultHideKeys } from '~/constants/parser'
 import { astroTemplate } from '~/constants/templates'
 import type * as AstroESLint from 'astro-eslint-parser'
 import type { AstroESLintParseOptions } from '~/types'
@@ -12,6 +13,7 @@ export const astroESLint = defineParser<
   link: 'https://github.com/ota-meshi/astro-eslint-parser',
   editorLanguage: 'astro',
   pkgName: 'astro-eslint-parser',
+  hideKeys: eslintParseResultHideKeys,
   options: {
     configurable: true,
     editorLanguage: 'json',

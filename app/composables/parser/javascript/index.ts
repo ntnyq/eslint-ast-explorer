@@ -1,3 +1,4 @@
+import { eslintParseResultHideKeys } from '~/constants/parser'
 import { javascriptTemplate } from '~/constants/templates'
 import type * as BabelParser from '@babel/parser'
 import type * as TypeScriptESLintParser from '@typescript-eslint/parser'
@@ -114,6 +115,7 @@ export const typescriptESLint = defineParser<
     defaultValueType: 'json5',
   },
   versionOverridable: false,
+  hideKeys: eslintParseResultHideKeys,
   async version() {
     return (await this).meta.version
   },

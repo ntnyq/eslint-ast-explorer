@@ -17,3 +17,10 @@ export const locationKeyList = [
   'end_lineno',
   'end_col_offset',
 ]
+
+export const eslintParseResultHideKeys = [
+  '_virtualScriptCode',
+  'scopeManager',
+  'services',
+  'visitorKeys',
+]

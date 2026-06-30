@@ -6,9 +6,11 @@ export function defineLanguage(language: Language) {
 }
 
 export function defineParser<C = unknown, O = unknown>(parser: Parser<C, O>) {
+  const { hideKeys = [], ...rest } = parser
+
   return {
     getNodeLocation,
-    hideKeys: ['parent'],
-    ...parser,
+    ...rest,
+    hideKeys: Array.from(new Set(['parent', ...hideKeys])),
   }
 }

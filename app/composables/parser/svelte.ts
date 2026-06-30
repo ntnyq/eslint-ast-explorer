@@ -1,3 +1,4 @@
+import { eslintParseResultHideKeys } from '~/constants/parser'
 import { svelteTemplate } from '~/constants/templates'
 import type * as SvelteESLint from 'svelte-eslint-parser'
 import type { SvelteESLintParseOptions } from '~/types'
@@ -12,6 +13,7 @@ export const svelteESLint = defineParser<
   link: 'https://github.com/ota-meshi/svelte-eslint-parser',
   editorLanguage: 'svelte',
   pkgName: 'svelte-eslint-parser',
+  hideKeys: eslintParseResultHideKeys,
   options: {
     configurable: true,
     editorLanguage: 'json',

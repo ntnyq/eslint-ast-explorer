@@ -1,3 +1,4 @@
+import { eslintParseResultHideKeys } from '~/constants/parser'
 import { vueTemplate } from '~/constants/templates'
 import type * as VueESLint from 'vue-eslint-parser'
 import type { VueESLintParseOptions } from '~/types'
@@ -9,6 +10,7 @@ export const vueESLint = defineParser<typeof VueESLint, VueESLintParseOptions>({
   link: 'https://github.com/ota-meshi/vue-eslint-parser',
   editorLanguage: 'vue',
   pkgName: 'vue-eslint-parser',
+  hideKeys: eslintParseResultHideKeys,
   options: {
     configurable: true,
     editorLanguage: 'json',

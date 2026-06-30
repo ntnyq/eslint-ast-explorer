@@ -32,6 +32,10 @@ export function createAstTreeIndex({
   const selfCursorNodes = new WeakSet<object>()
   const childCursorNodes = new WeakSet<object>()
   const searchMatchNodes = new WeakSet<object>()
+  const childResultCache = new WeakMap<
+    object,
+    Omit<VisitResult, 'selfCursor'>
+  >()
   const normalizedSearch = searchQuery.trim().toLowerCase()
 
   visit(root)
@@ -67,17 +71,10 @@ export function createAstTreeIndex({
       }
     }
 
-    const childResults = getEntries(value)
-      .filter(([childKey, childValue]) => !shouldHideKey(childKey, childValue))
-      .map(([childKey, childValue]) =>
-        visit(childValue, childKey, [...ancestors, value]),
-      )
-
-    const childCursor = childResults.some(
-      result => result.selfCursor || result.childCursor,
-    )
-    const subtreeMatch =
-      selfMatch || childResults.some(result => result.subtreeMatch)
+    const childResult =
+      childResultCache.get(value) || getChildResult(value, ancestors)
+    const childCursor = childResult.childCursor
+    const subtreeMatch = selfMatch || childResult.subtreeMatch
 
     if (selfCursor) {
       selfCursorNodes.add(value)
@@ -94,6 +91,28 @@ export function createAstTreeIndex({
       selfCursor,
       subtreeMatch,
     }
+  }
+
+  function getChildResult(
+    value: object,
+    ancestors: unknown[],
+  ): Omit<VisitResult, 'selfCursor'> {
+    const childResults = getEntries(value)
+      .filter(([childKey, childValue]) => !shouldHideKey(childKey, childValue))
+      .map(([childKey, childValue]) =>
+        visit(childValue, childKey, [...ancestors, value]),
+      )
+
+    const result = {
+      childCursor: childResults.some(
+        childResult => childResult.selfCursor || childResult.childCursor,
+      ),
+      subtreeMatch: childResults.some(childResult => childResult.subtreeMatch),
+    }
+
+    childResultCache.set(value, result)
+
+    return result
   }
 
   function nodeSelfMatches(value: unknown, key?: string | number) {

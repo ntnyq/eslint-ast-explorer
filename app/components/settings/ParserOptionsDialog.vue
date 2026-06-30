@@ -81,9 +81,11 @@ function resetOptions() {
           >
             <Label class="font-mono">{{ entry.key }}</Label>
             <Switch
-              @update:checked="(value: boolean) => setOption(entry.key, value)"
+              @update:model-value="
+                (value: boolean) => setOption(entry.key, value)
+              "
               v-if="entry.type === 'boolean'"
-              :checked="Boolean(entry.value)"
+              :model-value="Boolean(entry.value)"
             />
             <Input
               @update:model-value="value => setOption(entry.key, Number(value))"
