@@ -29,8 +29,6 @@ export const svelteESLint = defineParser<
 
 export const svelte = defineLanguage({
   label: 'Svelte',
-  // @unocss-include
-  icon: 'i-vscode-icons:file-type-svelte',
   parsers: [
     //
     svelteESLint,

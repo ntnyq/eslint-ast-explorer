@@ -29,8 +29,6 @@ export const astroESLint = defineParser<
 
 export const astro = defineLanguage({
   label: 'Astro',
-  // @unocss-include
-  icon: 'i-vscode-icons:file-type-light-astro',
   parsers: [
     //
     astroESLint,

@@ -29,8 +29,6 @@ export const vueESLint = defineParser<typeof VueESLint, VueESLintParseOptions>({
 
 export const vue = defineLanguage({
   label: 'Vue',
-  // @unocss-include
-  icon: 'i-vscode-icons:file-type-vue',
   parsers: [
     //
     vueESLint,

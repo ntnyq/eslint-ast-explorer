@@ -11,6 +11,10 @@ const isProduction = process.env.NODE_ENV === 'production'
 export default defineNuxtConfig({
   compatibilityDate: '2026-06-30',
 
+  css: ['~/assets/css/tailwind.css'],
+
+  modules: ['@vueuse/nuxt', 'nuxt-monaco-editor', 'nuxt-umami', 'shadcn-nuxt'],
+
   ssr: !isProduction,
 
   components: {
@@ -24,14 +28,6 @@ export default defineNuxtConfig({
       include: [/\.vue/, /\.md/],
     },
   },
-
-  css: [
-    '@unocss/reset/tailwind.css',
-    'floating-vue/dist/style.css',
-    '~/styles/vars.css',
-    '~/styles/global.css',
-    '~/assets/css/tailwind.css',
-  ],
 
   devtools: {
     enabled: false,
@@ -56,14 +52,6 @@ export default defineNuxtConfig({
       './utils',
     ],
   },
-
-  modules: [
-    '@vueuse/nuxt',
-    '@unocss/nuxt',
-    'nuxt-monaco-editor',
-    'nuxt-umami',
-    'shadcn-nuxt',
-  ],
 
   nitro: {
     preset: isProduction ? 'static' : undefined,
@@ -112,7 +100,6 @@ export default defineNuxtConfig({
 
     optimizeDeps: {
       include: [
-        'floating-vue',
         '@shikijs/core',
         '@shikijs/engine-javascript',
         '@shikijs/monaco',

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { BookOpen, Github } from 'lucide-vue-next'
 import { META } from '~/constants'
 import { repository, version } from '../../../package.json'
 
@@ -55,9 +56,9 @@ import { repository, version } from '../../../package.json'
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <span
+                  <BookOpen
                     aria-hidden="true"
-                    class="i-ri:book-2-line size-4"
+                    class="size-4"
                   />
                 </NuxtLink>
               </Button>
@@ -82,9 +83,9 @@ import { repository, version } from '../../../package.json'
                   title="GitHub"
                   aria-label="GitHub"
                 >
-                  <span
+                  <Github
                     aria-hidden="true"
-                    class="i-ri:github-line size-4"
+                    class="size-4"
                   />
                 </NuxtLink>
               </Button>

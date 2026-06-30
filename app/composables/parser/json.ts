@@ -29,8 +29,6 @@ export const jsoncESLint = defineParser<
 
 export const json = defineLanguage({
   label: 'Json',
-  // @unocss-include
-  icon: 'i-vscode-icons:file-type-json-official',
   parsers: [
     //
     jsoncESLint,

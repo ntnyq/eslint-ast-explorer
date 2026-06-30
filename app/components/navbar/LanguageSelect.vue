@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { ChevronDown } from 'lucide-vue-next'
 import type { Language } from '#imports'
 
 function changeLanguage(language: Language) {
@@ -21,14 +22,15 @@ const selectedLanguageId = computed({
         class="h-8 gap-2 px-3"
       >
         <span
-          :class="currentLanguage.icon"
           aria-hidden="true"
-          class="size-4"
-        />
+          class="bg-muted text-muted-foreground size-5 flex items-center justify-center border rounded text-[10px] font-semibold uppercase"
+        >
+          {{ currentLanguage.label.slice(0, 2) }}
+        </span>
         <span class="font-medium">{{ currentLanguage.label }}</span>
-        <span
+        <ChevronDown
           aria-hidden="true"
-          class="i-lucide:chevron-down size-4 opacity-60"
+          class="size-4 opacity-60"
         />
       </Button>
     </DropdownMenuTrigger>
@@ -44,10 +46,11 @@ const selectedLanguageId = computed({
           class="gap-2"
         >
           <span
-            :class="lang.icon"
             aria-hidden="true"
-            class="size-4"
-          />
+            class="bg-muted text-muted-foreground size-5 flex items-center justify-center border rounded text-[10px] font-semibold uppercase"
+          >
+            {{ lang.label.slice(0, 2) }}
+          </span>
           <span class="flex-1">{{ lang.label }}</span>
         </DropdownMenuRadioItem>
       </DropdownMenuRadioGroup>

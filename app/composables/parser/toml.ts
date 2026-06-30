@@ -29,8 +29,6 @@ export const tomlESLint = defineParser<
 
 export const toml = defineLanguage({
   label: 'TOML',
-  // @unocss-include
-  icon: 'i-vscode-icons:file-type-light-toml',
   parsers: [
     //
     tomlESLint,

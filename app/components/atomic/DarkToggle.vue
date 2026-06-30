@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { Moon, Sun } from 'lucide-vue-next'
+
 defineProps<{
   type?: 'icon' | 'button'
 }>()
@@ -60,9 +62,15 @@ function toggleDark(evt: MouseEvent) {
           type="button"
           variant="ghost"
         >
-          <span
+          <Moon
+            v-if="isDark"
             aria-hidden="true"
-            class="i-uil:sun dark:i-uil:moon size-4"
+            class="size-4"
+          />
+          <Sun
+            v-else
+            aria-hidden="true"
+            class="size-4"
           />
           <span v-if="type === 'button'">
             {{ isDark ? 'Dark Mode' : 'Light Mode' }}

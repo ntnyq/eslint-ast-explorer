@@ -23,8 +23,6 @@ export const esprima = defineParser<typeof ESprima, any>({
 
 export const javascript = defineLanguage({
   label: 'JavaScript',
-  // @unocss-include
-  icon: 'i-vscode-icons:file-type-js-official',
   parsers: [
     //
     esprima,
