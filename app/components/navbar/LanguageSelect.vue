@@ -4,33 +4,53 @@ import type { Language } from '#imports'
 function changeLanguage(language: Language) {
   currentLanguageId.value = language
 }
+
+const selectedLanguageId = computed({
+  get: () => currentLanguageId.value,
+  set: value => changeLanguage(value as Language),
+})
 </script>
 
 <template>
-  <VMenu
-    :class="{ dark: isDark }"
-    :delay="50"
-    placement="bottom-start"
-    class="flex"
-  >
-    <button
-      class="flex-center gap-1 px-10px"
-      type="button"
+  <DropdownMenu>
+    <DropdownMenuTrigger as-child>
+      <Button
+        type="button"
+        variant="outline"
+        size="sm"
+        class="h-8 gap-2 px-3"
+      >
+        <span
+          :class="currentLanguage.icon"
+          aria-hidden="true"
+          class="size-4"
+        />
+        <span class="font-medium">{{ currentLanguage.label }}</span>
+        <span
+          aria-hidden="true"
+          class="i-lucide:chevron-down size-4 opacity-60"
+        />
+      </Button>
+    </DropdownMenuTrigger>
+    <DropdownMenuContent
+      align="start"
+      class="min-w-44"
     >
-      <div :class="currentLanguage.icon" />
-      <span class="font-semibold">{{ currentLanguage.label }}</span>
-      <div class="i-lucide:chevron-down op-50" />
-    </button>
-
-    <template #popper>
-      <DropdownItem
-        @click="changeLanguage(id)"
-        v-for="(lang, id) in LANGUAGES"
-        :key="id"
-        :icon="lang.icon"
-        :text="lang.label"
-        :checked="currentLanguageId === id"
-      />
-    </template>
-  </VMenu>
+      <DropdownMenuRadioGroup v-model="selectedLanguageId">
+        <DropdownMenuRadioItem
+          v-for="(lang, id) in LANGUAGES"
+          :key="id"
+          :value="id"
+          class="gap-2"
+        >
+          <span
+            :class="lang.icon"
+            aria-hidden="true"
+            class="size-4"
+          />
+          <span class="flex-1">{{ lang.label }}</span>
+        </DropdownMenuRadioItem>
+      </DropdownMenuRadioGroup>
+    </DropdownMenuContent>
+  </DropdownMenu>
 </template>

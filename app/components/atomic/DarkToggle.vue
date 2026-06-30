@@ -48,10 +48,30 @@ function toggleDark(evt: MouseEvent) {
 </script>
 
 <template>
-  <ActionButton
-    @click="toggleDark"
-    :type
-    :title="isDark ? 'Dark Mode' : 'Light Mode'"
-    icon="i-uil:sun dark:i-uil:moon"
-  />
+  <TooltipProvider>
+    <Tooltip>
+      <TooltipTrigger as-child>
+        <Button
+          @click="toggleDark"
+          :size="type === 'button' ? 'sm' : 'icon'"
+          :class="type === 'button' ? 'h-8 gap-2 px-3' : 'size-8'"
+          :title="isDark ? 'Dark Mode' : 'Light Mode'"
+          :aria-label="isDark ? 'Dark Mode' : 'Light Mode'"
+          type="button"
+          variant="ghost"
+        >
+          <span
+            aria-hidden="true"
+            class="i-uil:sun dark:i-uil:moon size-4"
+          />
+          <span v-if="type === 'button'">
+            {{ isDark ? 'Dark Mode' : 'Light Mode' }}
+          </span>
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>
+        {{ isDark ? 'Dark Mode' : 'Light Mode' }}
+      </TooltipContent>
+    </Tooltip>
+  </TooltipProvider>
 </template>
