@@ -14,6 +14,7 @@ logs
 
 # Misc
 .DS_Store
+.worktrees
 .fleet
 .idea
 
