@@ -8,7 +8,7 @@ import process from 'node:process'
 const isProduction = process.env.NODE_ENV === 'production'
 
 export default defineNuxtConfig({
-  compatibilityDate: '2025-01-01',
+  compatibilityDate: '2026-06-30',
 
   modules: ['@vueuse/nuxt', '@unocss/nuxt', 'nuxt-monaco-editor', 'nuxt-umami'],
 
