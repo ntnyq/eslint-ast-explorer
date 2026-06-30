@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { LoaderCircle } from 'lucide-vue-next'
 import type * as Monaco from 'monaco-editor'
 import type { MonacoLanguage } from '#imports'
 
@@ -46,9 +47,14 @@ if (props.input) {
     :lang="language"
     :options
   >
-    <div class="h-full w-full flex flex-center flex-col gap-2">
-      <div class="i-ri:loader-2-line animate-spin text-4xl" />
-      <span class="text-lg">Loading...</span>
+    <div
+      class="text-muted-foreground h-full w-full flex flex-col items-center justify-center gap-2"
+    >
+      <LoaderCircle
+        aria-hidden="true"
+        class="size-8 animate-spin"
+      />
+      <span class="text-sm">Loading...</span>
     </div>
   </MonacoEditor>
 </template>

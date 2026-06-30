@@ -98,7 +98,7 @@ function highlight() {
     {
       range: monaco.Range.fromPositions(start, end),
       options: {
-        className: `important-bg-yellow-400 important-bg-opacity-30`,
+        className: 'ast-highlight-range',
       },
     },
   ])

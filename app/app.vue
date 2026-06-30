@@ -43,25 +43,27 @@ if (import.meta.server) {
 <template>
   <ClientOnly>
     <Suspense>
-      <main class="relative flex flex-col lg:h-screen">
-        <Navbar class="border-b" />
+      <main
+        class="bg-background text-foreground relative min-h-screen flex flex-col lg:h-screen"
+      >
+        <Navbar />
 
-        <div class="min-h-0 flex flex-1 flex-col gap-2 lg:flex-row">
-          <div class="min-w-0 flex flex-col gap-2 lg:(flex-1 flex-row)">
+        <div class="min-h-0 flex flex-1 flex-col gap-2 p-2 lg:flex-row">
+          <div class="min-w-0 flex flex-1 flex-col gap-2 lg:flex-row">
             <InputContainer
               v-if="showInputContainer"
-              class="min-w-0 flex-1 py-1"
+              class="min-w-0 flex-1"
             />
             <OutputContainer
               v-if="showOutputContainer"
-              class="min-w-0 flex-1 py-1"
+              class="min-w-0 flex-1"
             />
           </div>
         </div>
       </main>
 
       <template #fallback>
-        <div class="relative h-screen">
+        <div class="bg-background relative h-screen">
           <Loading />
         </div>
       </template>

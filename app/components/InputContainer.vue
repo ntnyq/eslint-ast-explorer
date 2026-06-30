@@ -8,11 +8,13 @@ const language = computed<MonacoLanguage>(() => {
 </script>
 
 <template>
-  <div class="relative">
+  <section
+    class="bg-card relative min-h-[50vh] overflow-hidden border rounded-lg lg:min-h-0"
+  >
     <CodeEditor
       v-model="code"
       :language
       class="h-full w-full"
     />
-  </div>
+  </section>
 </template>
