@@ -3,7 +3,10 @@ import { code } from '#imports'
 import type { MonacoLanguage } from '#imports'
 
 const language = computed<MonacoLanguage>(() => {
-  return 'yaml'
+  const editorLanguage = currentParser.value.editorLanguage
+  return typeof editorLanguage === 'function'
+    ? editorLanguage(parserOptions.value)
+    : editorLanguage
 })
 </script>
 
@@ -15,6 +18,7 @@ const language = computed<MonacoLanguage>(() => {
       v-model="code"
       :language
       class="h-full w-full"
+      input
     />
   </section>
 </template>

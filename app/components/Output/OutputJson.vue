@@ -24,6 +24,7 @@ const serialized = computed(() => {
           [
             ...(hideLocationData.value ? locationKeyList : []),
             ...hideKeys.value.filter(v => !!v),
+            ...(currentParser.value.hideKeys || []),
           ].includes(key)
         ) {
           return
@@ -33,6 +34,9 @@ const serialized = computed(() => {
         }
         if (typeof value === 'bigint') {
           return `(BigInt) ${value}n`
+        }
+        if (isRegExp(value)) {
+          return `(RegExp) ${value}`
         }
 
         if (seen.has(value)) {
@@ -60,19 +64,23 @@ const serialized = computed(() => {
   }
 })
 
-/** AST range -> code range */
-// const positionMap = computed(() =>
-//   serialized.value ? getLocationMapping(serialized.value, currentParser.value) : undefined,
-// )
+const positionMap = computed(() =>
+  serialized.value
+    ? getLocationMapping(serialized.value, currentParser.value)
+    : undefined,
+)
 
 const highlightRange = computed<LocRange | undefined>(() => {
-  return undefined
-  // return Array.from(positionMap.value.entries()).findLast(
-  //   ([, [start, end]]) => start <= editorCursor.value! && end >= editorCursor.value!,
-  // )?.[0]
+  return Array.from(positionMap.value?.entries() || []).findLast(
+    ([, [start, end]]) =>
+      start <= editorCursor.value && end >= editorCursor.value,
+  )?.[0]
 })
 
 let decorationsCollection:
+  | Monaco.editor.IEditorDecorationsCollection
+  | undefined
+let searchDecorationsCollection:
   | Monaco.editor.IEditorDecorationsCollection
   | undefined
 
@@ -107,8 +115,43 @@ function highlight() {
   }
 }
 
+function highlightSearch() {
+  searchDecorationsCollection?.clear()
+
+  const query = outputSearch.value.trim()
+  const editor: Monaco.editor.IStandaloneCodeEditor | undefined = toRaw(
+    containerRef.value?.$editor,
+  )
+  const model = editor?.getModel()
+
+  if (!editor || !model || !query || !serialized.value) {
+    return
+  }
+
+  const lowerSerialized = serialized.value.toLowerCase()
+  const lowerQuery = query.toLowerCase()
+  const ranges: Monaco.editor.IModelDeltaDecoration[] = []
+  let index = lowerSerialized.indexOf(lowerQuery)
+
+  while (index >= 0 && ranges.length < 200) {
+    const start = model.getPositionAt(index)
+    const end = model.getPositionAt(index + query.length)
+
+    ranges.push({
+      range: monaco.Range.fromPositions(start, end),
+      options: {
+        className: 'ast-search-hit',
+      },
+    })
+
+    index = lowerSerialized.indexOf(lowerQuery, index + lowerQuery.length)
+  }
+
+  searchDecorationsCollection = editor.createDecorationsCollection(ranges)
+}
+
 watch(
-  [() => containerRef.value?.$editor],
+  [highlightRange, () => containerRef.value?.$editor],
   () => {
     highlight()
   },
@@ -117,8 +160,19 @@ watch(
     flush: 'post',
   },
 )
+watch(
+  [outputSearch, serialized, () => containerRef.value?.$editor],
+  () => {
+    highlightSearch()
+  },
+  {
+    immediate: true,
+    flush: 'post',
+  },
+)
 onMounted(() => {
   highlight()
+  highlightSearch()
 })
 </script>
 

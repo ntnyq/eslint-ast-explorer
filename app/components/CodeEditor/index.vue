@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { LoaderCircle } from 'lucide-vue-next'
+import { LoaderCircle } from '@lucide/vue'
 import type * as Monaco from 'monaco-editor'
 import type { MonacoLanguage } from '#imports'
 
@@ -12,6 +12,7 @@ const code = defineModel<string>()
 const containerRef = useTemplateRef<{
   $editor: Monaco.editor.IStandaloneCodeEditor | undefined
 }>('containerRef')
+const monaco: typeof Monaco = await useMonaco()!
 
 const options = computed<Monaco.editor.IStandaloneEditorConstructionOptions>(
   () => ({
@@ -22,6 +23,10 @@ const options = computed<Monaco.editor.IStandaloneEditorConstructionOptions>(
 )
 
 if (props.input) {
+  let hoverDecorationsCollection:
+    | Monaco.editor.IEditorDecorationsCollection
+    | undefined
+
   watch(
     () => containerRef.value?.$editor,
     editor => {
@@ -35,6 +40,39 @@ if (props.input) {
     },
     {
       immediate: true,
+    },
+  )
+
+  watch(
+    [outputHoverRange, () => containerRef.value?.$editor],
+    ([range, editor]) => {
+      hoverDecorationsCollection?.clear()
+
+      if (!range || !editor) {
+        return
+      }
+
+      const model = editor.getModel()
+      if (!model) {
+        return
+      }
+
+      const start = model.getPositionAt(range[0])
+      const end = model.getPositionAt(range[1])
+
+      hoverDecorationsCollection = editor.createDecorationsCollection([
+        {
+          range: monaco.Range.fromPositions(start, end),
+          options: {
+            className: 'ast-highlight-range',
+            isWholeLine: false,
+          },
+        },
+      ])
+    },
+    {
+      immediate: true,
+      flush: 'post',
     },
   )
 }

@@ -5,6 +5,7 @@ import { svelte } from '../parser/svelte'
 import { toml } from '../parser/toml'
 import { vue } from '../parser/vue'
 import { yaml } from '../parser/yaml'
+import type { LocRange } from '../location'
 
 export type MonacoLanguage =
   | 'javascript'
@@ -39,12 +40,14 @@ export const ast = shallowRef<unknown>({})
 export const error = shallowRef<unknown>()
 export const parseCost = ref(0)
 export const editorCursor = ref(0)
+export const outputHoverRange = shallowRef<LocRange | undefined>()
 
 export const currentLanguageId = ref<Language>('yaml')
 export const currentParserId = ref<string | undefined>()
 
 export const overrideVersion = ref<string>()
 export const displayVersion = ref<string>()
+export const isUrlVersion = computed(() => isUrl(overrideVersion.value || ''))
 
 export const currentLanguage = computed(
   () => LANGUAGES[currentLanguageId.value] || LANGUAGES.javascript,
@@ -71,9 +74,14 @@ const parserModuleCache: Record<string, unknown> = Object.create(null)
 
 async function initParser() {
   const { pkgName, init } = currentParser.value
-  const pkgId = `${pkgName}${overrideVersion.value ? `@${overrideVersion.value}` : ''}`
+  const pkgId = isUrlVersion.value
+    ? overrideVersion.value!
+    : `${pkgName}${overrideVersion.value ? `@${overrideVersion.value}` : ''}`
   if (parserModuleCache[pkgId]) {
     return parserModuleCache[pkgId]
+  }
+  if (isUrlVersion.value) {
+    return (parserModuleCache[pkgId] = await importUrl(pkgId))
   }
   return (parserModuleCache[pkgId] = await init?.(pkgId))
 }
@@ -119,6 +127,11 @@ export function initParserModule() {
         if (currentParser.value.id !== id) {
           return
         }
+        if (parserOptionsError.value) {
+          throw new Error(
+            `Failed to parse options\n${parserOptionsError.value}`,
+          )
+        }
         loading.value = 'parse'
 
         const t = window.performance.now()
@@ -137,6 +150,40 @@ export function initParserModule() {
         }
       } finally {
         loading.value = false
+      }
+    },
+    {
+      immediate: true,
+    },
+  )
+
+  watch(
+    [currentParserId, overrideVersion],
+    async () => {
+      const parser = currentParser.value
+
+      if (overrideVersion.value) {
+        displayVersion.value = overrideVersion.value
+        if (!isUrlVersion.value) {
+          displayVersion.value = await fetchVersion(
+            `${parser.pkgName}@${overrideVersion.value}`,
+          )
+        }
+        return
+      }
+
+      if (typeof parser.version === 'string') {
+        displayVersion.value = parser.version
+        return
+      }
+
+      displayVersion.value = ''
+      const version = await Promise.resolve(
+        parser.version.call(parserModulePromise.value, parser.pkgName),
+      )
+
+      if (currentParser.value.id === parser.id) {
+        displayVersion.value = version
       }
     },
     {

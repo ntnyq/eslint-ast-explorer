@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Moon, Sun } from 'lucide-vue-next'
+import { Moon, Sun } from '@lucide/vue'
 
 defineProps<{
   type?: 'icon' | 'button'

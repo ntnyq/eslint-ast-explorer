@@ -1,3 +1,4 @@
+import { getNodeLocation } from '~/composables/location'
 import type { Language, Parser } from '~/types'
 
 export function defineLanguage(language: Language) {
@@ -5,5 +6,9 @@ export function defineLanguage(language: Language) {
 }
 
 export function defineParser<C = unknown, O = unknown>(parser: Parser<C, O>) {
-  return parser
+  return {
+    getNodeLocation,
+    hideKeys: ['parent'],
+    ...parser,
+  }
 }

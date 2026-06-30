@@ -1,6 +1,26 @@
 <script lang="ts" setup>
-import { ChevronDown } from 'lucide-vue-next'
+import {
+  Braces,
+  Check,
+  ChevronDown,
+  CodeXml,
+  FileCode2,
+  FileJson,
+  FileType2,
+  ScrollText,
+} from '@lucide/vue'
+import type { Component } from 'vue'
 import type { Language } from '#imports'
+
+const languageIcons = {
+  astro: FileCode2,
+  javascript: Braces,
+  json: FileJson,
+  svelte: CodeXml,
+  toml: FileType2,
+  vue: CodeXml,
+  yaml: ScrollText,
+} satisfies Record<Language, Component>
 
 function changeLanguage(language: Language) {
   currentLanguageId.value = language
@@ -23,9 +43,12 @@ const selectedLanguageId = computed({
       >
         <span
           aria-hidden="true"
-          class="bg-muted text-muted-foreground size-5 flex items-center justify-center border rounded text-[10px] font-semibold uppercase"
+          class="bg-muted text-muted-foreground size-5 flex items-center justify-center border rounded"
         >
-          {{ currentLanguage.label.slice(0, 2) }}
+          <component
+            :is="languageIcons[currentLanguageId]"
+            class="size-3.5"
+          />
         </span>
         <span class="font-medium">{{ currentLanguage.label }}</span>
         <ChevronDown
@@ -47,11 +70,17 @@ const selectedLanguageId = computed({
         >
           <span
             aria-hidden="true"
-            class="bg-muted text-muted-foreground size-5 flex items-center justify-center border rounded text-[10px] font-semibold uppercase"
+            class="bg-muted text-muted-foreground size-5 flex items-center justify-center border rounded"
           >
-            {{ lang.label.slice(0, 2) }}
+            <component
+              :is="languageIcons[id]"
+              class="size-3.5"
+            />
           </span>
           <span class="flex-1">{{ lang.label }}</span>
+          <template #indicator-icon>
+            <Check class="size-3.5" />
+          </template>
         </DropdownMenuRadioItem>
       </DropdownMenuRadioGroup>
     </DropdownMenuContent>

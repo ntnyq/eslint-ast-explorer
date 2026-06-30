@@ -119,7 +119,7 @@ export default defineNuxtConfig({
         'class-variance-authority',
         'clsx',
         'json5',
-        'lucide-vue-next',
+        '@lucide/vue',
         'reka-ui',
         'tailwind-merge',
       ],

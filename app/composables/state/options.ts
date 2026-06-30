@@ -2,19 +2,21 @@ import json5 from 'json5'
 import { currentParser, currentParserId } from './parser'
 
 export const rawOptions = ref('')
+export const parserOptionsError = shallowRef<string>()
 
 export const parserOptions = computed({
   get() {
     try {
+      parserOptionsError.value = undefined
       return currentParser.value.options.defaultValueType === 'javascript'
         ? // TODO: use a better way to eval
           // eslint-disable-next-line no-new-func
           new Function(rawOptions.value)()
         : json5.parse(rawOptions.value)
-    } catch {
-      console.error(
-        `Failed to parse options: ${JSON.stringify(rawOptions.value, null, 2)}`,
-      )
+    } catch (err) {
+      parserOptionsError.value =
+        err instanceof Error ? err.message : String(err)
+      console.error(`Failed to parse options: ${rawOptions.value}`)
     }
   },
   set(value) {

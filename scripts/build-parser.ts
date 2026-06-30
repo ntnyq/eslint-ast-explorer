@@ -23,7 +23,8 @@ export async function buildESLintParser(
 ) {
   const { noCache = false } = options
   const { version } = required(`${parserPackage}/package.json`)
-  const CACHE_PATH = resolve(NUXT_CACHE_DIR, `${parserPackage}@${version}.js`)
+  const cacheFile = `${parserPackage.replaceAll('/', '__')}@${version}.js`
+  const CACHE_PATH = resolve(NUXT_CACHE_DIR, cacheFile)
 
   await mkdir(CACHE_DIR, { recursive: true })
 

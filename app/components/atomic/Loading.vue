@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { LoaderCircle } from 'lucide-vue-next'
+import { LoaderCircle } from '@lucide/vue'
 
 defineProps<{
   text?: string

@@ -62,6 +62,11 @@ if (import.meta.server) {
         </div>
       </main>
 
+      <ParserOptionsDialog />
+      <ParserVersionDialog />
+      <EditorSettingsDialog />
+      <AstTreeStyleDialog />
+
       <template #fallback>
         <div class="bg-background relative h-screen">
           <Loading />

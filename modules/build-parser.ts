@@ -27,5 +27,10 @@ export default defineNuxtModule({
       filename: 'svelte-eslint-parser',
       getContents: () => buildESLintParser(logger, 'svelte-eslint-parser'),
     })
+
+    addTemplate({
+      filename: 'ts-eslint-parser',
+      getContents: () => buildESLintParser(logger, '@typescript-eslint/parser'),
+    })
   },
 })
