@@ -12,15 +12,15 @@
 
 ## File Structure
 
-- Modify `package.json`: remove UnoCSS/Floating Vue dependencies, add Tailwind/shadcn dependencies, keep existing scripts.
+- Modify `package.json`: add Tailwind/shadcn dependencies in Task 1, then remove UnoCSS/Floating Vue dependencies in Task 4 after their consumers are migrated.
 - Modify `pnpm-lock.yaml`: update through `pnpm install`.
-- Modify `nuxt.config.ts`: remove `@unocss/nuxt` and Floating Vue CSS, add `shadcn-nuxt`, add Tailwind CSS import and Vite plugin.
+- Modify `nuxt.config.ts`: add `shadcn-nuxt`, Tailwind CSS import, and Vite plugin in Task 1 while temporarily keeping UnoCSS/Floating Vue active; remove the old modules and CSS in Task 4.
 - Create `components.json`: shadcn-vue configuration for Nuxt, Tailwind CSS, aliases, and icon library.
 - Create `app/assets/css/tailwind.css`: Tailwind import, shadcn CSS variables, base layer, app-level scrollbar and view-transition styles.
-- Delete `uno.config.ts`: old UnoCSS config and shortcuts.
-- Delete `app/styles/vars.css`: old CSS variable source replaced by shadcn variables.
-- Modify `app/styles/global.css`: either remove obsolete vars or delete if all remaining styles move to `app/assets/css/tailwind.css`.
-- Delete `app/plugins/1.floating-vue.ts`: Floating Vue is replaced by shadcn-vue Tooltip and DropdownMenu.
+- Delete `uno.config.ts` in Task 4: old UnoCSS config and shortcuts.
+- Delete `app/styles/vars.css` in Task 4: old CSS variable source replaced by shadcn variables.
+- Modify `app/styles/global.css` in Task 4: either remove obsolete vars or delete if all remaining styles move to `app/assets/css/tailwind.css`.
+- Delete `app/plugins/1.floating-vue.ts` in Task 4: Floating Vue is replaced by shadcn-vue Tooltip and DropdownMenu.
 - Create `app/lib/utils.ts`: `cn()` helper for shadcn-vue components.
 - Create shadcn-vue component files under:
   - `app/components/ui/button/`
@@ -70,21 +70,20 @@ Expected:
 - `git status --short` only shows the plan file if it has not been committed yet.
 - `pnpm lint` and `pnpm typecheck` pass before migration work starts. If either fails on `main`, record the failure output and continue only if the failure is unrelated to this migration.
 
-- [ ] **Step 2: Install and remove dependencies**
+- [ ] **Step 2: Install foundation dependencies**
 
 Run:
 
 ```bash
 rtk pnpm add @tailwindcss/vite class-variance-authority clsx lucide-vue-next reka-ui tailwind-merge tailwindcss tw-animate-css
 rtk pnpm add -D shadcn-nuxt
-rtk pnpm remove @unocss/nuxt @unocss/reset floating-vue
 ```
 
 Expected:
 
 - `package.json` includes Tailwind and shadcn runtime dependencies.
 - `package.json` includes `shadcn-nuxt` in `devDependencies`.
-- UnoCSS and Floating Vue packages are removed.
+- UnoCSS and Floating Vue packages remain installed until Task 4 removes their last consumers.
 - `pnpm-lock.yaml` updates.
 
 - [ ] **Step 3: Configure Nuxt for Tailwind and shadcn**
@@ -100,14 +99,26 @@ const isProduction = process.env.NODE_ENV === 'production'
 export default defineNuxtConfig({
   compatibilityDate: '2026-06-30',
 
-  modules: ['@vueuse/nuxt', 'nuxt-monaco-editor', 'nuxt-umami', 'shadcn-nuxt'],
+  modules: [
+    '@vueuse/nuxt',
+    '@unocss/nuxt',
+    'nuxt-monaco-editor',
+    'nuxt-umami',
+    'shadcn-nuxt',
+  ],
 
   shadcn: {
     prefix: '',
     componentDir: './app/components/ui',
   },
 
-  css: ['~/assets/css/tailwind.css'],
+  css: [
+    '@unocss/reset/tailwind.css',
+    'floating-vue/dist/style.css',
+    '~/styles/vars.css',
+    '~/styles/global.css',
+    '~/assets/css/tailwind.css',
+  ],
 
   vite: {
     plugins: [tailwindcss()],
@@ -121,6 +132,7 @@ export default defineNuxtConfig({
         '@shikijs/monaco',
         '@shikijs/themes/dark-plus',
         '@shikijs/themes/light-plus',
+        'floating-vue',
         'json5',
         '@shikijs/langs/astro',
         '@shikijs/langs/css',
@@ -147,7 +159,7 @@ export default defineNuxtConfig({
 })
 ```
 
-Keep the existing `components`, `devtools`, `experimental`, `imports`, `nitro`, and `umami` sections unchanged unless TypeScript requires a local ordering change.
+Keep the existing `components`, `devtools`, `experimental`, `imports`, `nitro`, and `umami` sections unchanged unless TypeScript requires a local ordering change. Keep UnoCSS and Floating Vue active until Tasks 2-4 migrate and remove their consumers.
 
 - [ ] **Step 4: Add shadcn-vue configuration**
 
@@ -384,7 +396,7 @@ Expected:
 Run:
 
 ```bash
-rtk proxy git add package.json pnpm-lock.yaml nuxt.config.ts components.json app/assets/css/tailwind.css app/lib/utils.ts app/components/ui
+rtk proxy git add package.json pnpm-lock.yaml nuxt.config.ts components.json app/assets/css/tailwind.css app/lib/utils.ts app/components/ui docs/superpowers/plans/2026-06-30-shadcn-vue-tailwind-migration.md
 rtk proxy git commit -m "chore: add shadcn vue tailwind foundation"
 ```
 

@@ -4,13 +4,12 @@
  */
 
 import process from 'node:process'
+import tailwindcss from '@tailwindcss/vite'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
 export default defineNuxtConfig({
   compatibilityDate: '2026-06-30',
-
-  modules: ['@vueuse/nuxt', '@unocss/nuxt', 'nuxt-monaco-editor', 'nuxt-umami'],
 
   ssr: !isProduction,
 
@@ -31,6 +30,7 @@ export default defineNuxtConfig({
     'floating-vue/dist/style.css',
     '~/styles/vars.css',
     '~/styles/global.css',
+    '~/assets/css/tailwind.css',
   ],
 
   devtools: {
@@ -57,6 +57,14 @@ export default defineNuxtConfig({
     ],
   },
 
+  modules: [
+    '@vueuse/nuxt',
+    '@unocss/nuxt',
+    'nuxt-monaco-editor',
+    'nuxt-umami',
+    'shadcn-nuxt',
+  ],
+
   nitro: {
     preset: isProduction ? 'static' : undefined,
     esbuild: {
@@ -82,6 +90,11 @@ export default defineNuxtConfig({
       : {},
   },
 
+  shadcn: {
+    componentDir: './app/components/ui',
+    prefix: '',
+  },
+
   umami: {
     autoTrack: false,
     enabled: true,
@@ -91,6 +104,8 @@ export default defineNuxtConfig({
   },
 
   vite: {
+    plugins: [tailwindcss()],
+
     esbuild: {
       legalComments: 'external',
     },
