@@ -36,7 +36,7 @@
     "@types/esprima": "^4.0.6",
     "@typescript-eslint/parser": "^8.65.0",
     "@vueuse/core": "^14.3.0",
-    "astro-eslint-parser": "^2.1.0",
+    "astro-eslint-parser": "^3.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.21",
