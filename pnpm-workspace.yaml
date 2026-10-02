@@ -8,5 +8,6 @@ allowBuilds:
   vue-demi: true
 
 minimumReleaseAge: 0
-packageManagerStrict: false
+
+pmOnFail: warn
 shamefullyHoist: true
