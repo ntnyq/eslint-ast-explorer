@@ -5,22 +5,20 @@ import themeDark from '@shikijs/themes/dark-plus'
 import themeLight from '@shikijs/themes/light-plus'
 import { shikiLangs } from '~/composables/shiki'
 
-export default defineNuxtPlugin(() => {
-  useMonaco()?.then(monaco => {
-    if (!monaco) {
-      return
-    }
-
-    monaco.languages.register({ id: 'vue' })
-    monaco.languages.register({ id: 'svelte' })
-    monaco.languages.register({ id: 'astro' })
-
-    const highlighter = createHighlighterCoreSync({
-      themes: [themeDark, themeLight],
-      langs: shikiLangs,
-      engine: createJavaScriptRegexEngine(),
-    })
-
-    shikiToMonaco(highlighter, monaco)
+export default defineNuxtPlugin(async () => {
+  const monaco = await useMonaco()
+  const highlighter = createHighlighterCoreSync({
+    themes: [themeDark, themeLight],
+    langs: shikiLangs,
+    engine: createJavaScriptRegexEngine(),
   })
+  const registered = new Set(
+    monaco.languages.getLanguages().map(language => language.id),
+  )
+  for (const id of highlighter.getLoadedLanguages()) {
+    if (!registered.has(id)) {
+      monaco.languages.register({ id })
+    }
+  }
+  shikiToMonaco(highlighter, monaco)
 })

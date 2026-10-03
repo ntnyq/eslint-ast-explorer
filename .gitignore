@@ -28,3 +28,7 @@ sw.*
 
 # UnoCSS preset web fonts
 public/assets/fonts
+
+# Browser regression artifacts
+playwright-report
+test-results

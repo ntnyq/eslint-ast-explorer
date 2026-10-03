@@ -1,3 +1,4 @@
+import { validateParserVersion } from './parser-version'
 import { isUrl } from './url'
 
 export interface SerializedAppState {
@@ -34,7 +35,7 @@ export function createShareableUrlState(
   const shareable: SerializedAppState = {
     l: state.l,
     p: state.p,
-    v: state.v && !isUrl(state.v) ? state.v : undefined,
+    v: validateParserVersion(state.v).value,
   }
 
   return serializeBoundedState(shareable, maxLength)
@@ -47,7 +48,7 @@ export function createPersistedUrlState(
   return serializeBoundedState(
     {
       ...state,
-      v: state.v && !isUrl(state.v) ? state.v : undefined,
+      v: validateParserVersion(state.v).value,
     },
     maxLength,
   )

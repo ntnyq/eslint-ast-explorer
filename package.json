@@ -20,11 +20,13 @@
     "release": "run-s release:check release:version",
     "release:check": "run-s format:check lint typecheck",
     "release:version": "bumpp",
+    "test:e2e": "playwright test",
     "typecheck": "run-s typecheck:vue typecheck:native",
     "typecheck:native": "node node_modules/@typescript/native/bin/tsc --noEmit -p .nuxt/tsconfig.node.json",
     "typecheck:vue": "nuxt typecheck"
   },
   "dependencies": {
+    "@astrojs/compiler-binding-wasm32-wasi": "0.4.0",
     "@babel/eslint-parser": "^8.0.6",
     "@babel/parser": "^8.0.6",
     "@lucide/vue": "^1.47.0",
@@ -50,6 +52,7 @@
     "jsonc-eslint-parser": "^3.3.0",
     "monaco-editor": "^0.56.0",
     "reka-ui": "^2.10.5",
+    "semver": "7.8.5",
     "svelte": "^5.57.1",
     "svelte-eslint-parser": "^1.8.1",
     "tailwind-merge": "^3.7.0",
@@ -61,8 +64,10 @@
   },
   "devDependencies": {
     "@ntnyq/eslint-config": "^6.1.5",
+    "@playwright/test": "1.63.0",
     "@rolldown/plugin-node-polyfills": "^1.0.3",
     "@types/node": "^26.6.2",
+    "@types/semver": "^7.8.0",
     "@typescript/native": "npm:typescript@^7.0.2",
     "@vueuse/nuxt": "^15.0.0",
     "bumpp": "^12.3.0",

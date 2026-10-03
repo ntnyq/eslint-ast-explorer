@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { createRequire } from 'node:module'
 import process from 'node:process'
@@ -11,6 +12,7 @@ const required = createRequire(import.meta.url)
 
 const NUXT_CACHE_DIR = '.nuxt/cache'
 const ENTRY = 'virtual:entry'
+const BROWSER_MODULE = 'virtual:browser-node-module'
 const CACHE_DIR = resolve(NUXT_CACHE_DIR)
 
 interface BuildESLintParserOptions {
@@ -23,12 +25,20 @@ export async function buildESLintParser(
   options: BuildESLintParserOptions = {},
 ) {
   const needsNodePolyfills = [
+    'astro-eslint-parser',
     '@typescript-eslint/parser',
     'vue-eslint-parser',
+    'toml-eslint-parser',
+    'yaml-eslint-parser',
   ].includes(parserPackage)
   const { noCache = false } = options
   const { version } = required(`${parserPackage}/package.json`)
-  const cacheFile = `${parserPackage.replaceAll('/', '__')}@${version}${needsNodePolyfills ? '-polyfilled' : ''}.js`
+  const fingerprint = createHash('sha256')
+    .update(await readFile(new URL(import.meta.url)))
+    .update(await readFile(resolve('pnpm-lock.yaml')))
+    .digest('hex')
+    .slice(0, 12)
+  const cacheFile = `${parserPackage.replaceAll('/', '__')}@${version}-${fingerprint}.js`
   const CACHE_PATH = resolve(NUXT_CACHE_DIR, cacheFile)
 
   await mkdir(CACHE_DIR, { recursive: true })
@@ -49,7 +59,8 @@ export async function buildESLintParser(
     input: [ENTRY],
     write: false,
     platform: 'browser',
-    external: ['eslint'],
+    // Vite processes the official Astro browser loader's WASM and worker URLs.
+    external: ['eslint', '@astrojs/compiler-binding'],
     resolve: {
       /// keep-sorted
       alias: {
@@ -81,6 +92,31 @@ export async function buildESLintParser(
       format: 'esm',
     },
     plugins: [
+      {
+        name: 'astro-browser-builtins',
+        resolveId(id) {
+          if (parserPackage !== 'astro-eslint-parser') {
+            return
+          }
+          const builtin = id.replace(/^node:/, '')
+          if (builtin === 'module') {
+            return BROWSER_MODULE
+          }
+          if (['fs', 'fs/promises', 'path', 'url', 'util'].includes(builtin)) {
+            return required.resolve(`unenv/runtime/node/${builtin}/index`)
+          }
+        },
+        load(id) {
+          if (id === BROWSER_MODULE) {
+            // Astro receives its script parser explicitly. Node package discovery
+            // remains unavailable; its optional filesystem probes must still fail.
+            return `export function createRequire() {
+              const unavailable = (id) => { throw new Error('Node module resolution is unavailable in the browser: ' + id) }
+              return Object.assign(unavailable, { cache: {}, resolve: unavailable })
+            }`
+          }
+        },
+      },
       ...(needsNodePolyfills ? [nodePolyfills()] : []),
       {
         name: ENTRY,
