@@ -20,7 +20,9 @@
     "release": "run-s release:check release:version",
     "release:check": "run-s format:check lint typecheck",
     "release:version": "bumpp",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "run-s typecheck:vue typecheck:native",
+    "typecheck:native": "node node_modules/@typescript/native/bin/tsc --noEmit -p .nuxt/tsconfig.node.json",
+    "typecheck:vue": "nuxt typecheck"
   },
   "dependencies": {
     "@babel/eslint-parser": "^8.0.6",
@@ -61,6 +63,7 @@
     "@ntnyq/eslint-config": "^6.1.5",
     "@rolldown/plugin-node-polyfills": "^1.0.3",
     "@types/node": "^26.6.2",
+    "@typescript/native": "npm:typescript@^7.0.2",
     "@vueuse/nuxt": "^15.0.0",
     "bumpp": "^12.3.0",
     "consola": "^3.4.2",
@@ -76,7 +79,7 @@
     "rolldown": "^1.2.9",
     "shadcn-nuxt": "^2.8.2",
     "tsx": "^4.23.15",
-    "typescript": "^6.0.3",
+    "typescript": "npm:@typescript/typescript6@^6.0.2",
     "unenv": "^1.10.0",
     "unplugin-replace": "^0.9.0",
     "vite": "^8.3.0",

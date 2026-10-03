@@ -1,6 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { createRequire } from 'node:module'
 import process from 'node:process'
+import nodePolyfills from '@rolldown/plugin-node-polyfills'
 import { build } from 'rolldown'
 import Replace from 'unplugin-replace/rolldown'
 import { resolve } from './utils'
@@ -21,9 +22,13 @@ export async function buildESLintParser(
   parserPackage: string,
   options: BuildESLintParserOptions = {},
 ) {
+  const needsNodePolyfills = [
+    '@typescript-eslint/parser',
+    'vue-eslint-parser',
+  ].includes(parserPackage)
   const { noCache = false } = options
   const { version } = required(`${parserPackage}/package.json`)
-  const cacheFile = `${parserPackage.replaceAll('/', '__')}@${version}.js`
+  const cacheFile = `${parserPackage.replaceAll('/', '__')}@${version}${needsNodePolyfills ? '-polyfilled' : ''}.js`
   const CACHE_PATH = resolve(NUXT_CACHE_DIR, cacheFile)
 
   await mkdir(CACHE_DIR, { recursive: true })
@@ -53,8 +58,15 @@ export async function buildESLintParser(
         'node:fs/promises': 'unenv/runtime/mock/proxy',
         'node:module': 'unenv/runtime/node/module/index',
         'node:path': 'pathe',
-        'node:util': 'unenv/runtime/mock/proxy',
-        assert: 'unenv/runtime/mock/proxy',
+        ...(needsNodePolyfills
+          ? {
+              'node:util': 'unenv/runtime/node/util/index',
+              url: 'unenv/runtime/node/url/index',
+            }
+          : {
+              'node:util': 'unenv/runtime/mock/proxy',
+              assert: 'unenv/runtime/mock/proxy',
+            }),
         fs: 'unenv/runtime/mock/proxy',
         module: 'unenv/runtime/node/module/index',
         // ...(parserPackage.startsWith('astro')
@@ -69,6 +81,7 @@ export async function buildESLintParser(
       format: 'esm',
     },
     plugins: [
+      ...(needsNodePolyfills ? [nodePolyfills()] : []),
       {
         name: ENTRY,
         resolveId(id) {
