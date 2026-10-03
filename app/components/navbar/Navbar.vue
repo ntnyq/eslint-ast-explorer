@@ -52,6 +52,7 @@ function openEditorSettings() {
     >
       <div class="flex items-center gap-3 text-sm">
         <span
+          aria-label="Parse duration"
           class="bg-primary/12 text-primary border-primary/20 inline-flex h-7 items-center gap-1.5 rounded-full border px-2.5 font-mono text-[0.8125rem]"
         >
           <Zap

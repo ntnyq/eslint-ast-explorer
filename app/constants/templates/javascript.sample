@@ -1,7 +1,7 @@
 // --- Demonstration of imports ---
 
 // Importing named exports and the default export
-import defaultAnimal, { person, add } from './module.js';
+import importedAnimal, { person as importedPerson, add as importedAdd } from './module.js';
 
 // Importing everything from the module as an alias
 import * as Module from './module.js';

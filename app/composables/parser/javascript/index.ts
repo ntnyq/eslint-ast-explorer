@@ -1,3 +1,4 @@
+import babelPackage from '@babel/parser/package.json'
 import { eslintParseResultHideKeys } from '~/constants/parser'
 import { javascriptTemplate } from '~/constants/templates'
 import type * as BabelParser from '@babel/parser'
@@ -21,8 +22,10 @@ export const esprima = defineParser<typeof ESprima, any>({
     },
     defaultValueType: 'json5',
   },
-  version: fetchVersion,
-  init: pkg => importSkypack(pkg),
+  async version() {
+    return (await this).version
+  },
+  init: () => import('esprima'),
   parse(code, options) {
     return this.parseModule(code, options)
   },
@@ -48,8 +51,10 @@ export const espree = defineParser<typeof Espree, Espree.Options>({
     },
     defaultValueType: 'json5',
   },
-  version: fetchVersion,
-  init: pkg => importSkypack(pkg),
+  async version() {
+    return (await this).version
+  },
+  init: () => import('espree'),
   parse(code, options) {
     return this.parse(code, options)
   },
@@ -84,8 +89,8 @@ export const babelParser = defineParser<
     },
     defaultValueType: 'json5',
   },
-  version: fetchVersion,
-  init: pkg => importSkypack(pkg),
+  version: babelPackage.version,
+  init: () => import('@babel/parser'),
   parse(code, options) {
     return this.parse(code, options)
   },

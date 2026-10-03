@@ -27,16 +27,6 @@ if (import.meta.server) {
     viewport: 'width=device-width, initial-scale=1',
     appleMobileWebAppStatusBarStyle: 'black-translucent',
   })
-
-  useHeadSafe({
-    htmlAttrs: {
-      lang: 'en',
-    },
-    link: [
-      //
-      { href: '/icon_48.png', rel: 'icon', type: 'image/png' },
-    ],
-  })
 }
 </script>
 

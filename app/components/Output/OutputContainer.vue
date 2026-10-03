@@ -56,6 +56,7 @@ function printAst() {
 
 <template>
   <section
+    aria-label="AST output"
     class="bg-card min-h-[50vh] flex flex-col overflow-hidden border rounded-lg lg:min-h-0"
   >
     <div
@@ -111,6 +112,7 @@ function printAst() {
             <TooltipTrigger as-child>
               <Button
                 @click="printAst"
+                :disabled="!ast || !!error || !!loading"
                 type="button"
                 size="icon"
                 variant="ghost"
@@ -152,6 +154,7 @@ function printAst() {
       </div>
       <div
         v-else-if="error"
+        role="alert"
         class="bg-destructive/5 text-destructive h-full w-full overflow-auto p-3 text-sm"
       >
         <pre class="whitespace-pre-wrap font-mono">{{ errorString }}</pre>

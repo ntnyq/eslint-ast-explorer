@@ -12,6 +12,7 @@ const language = computed<MonacoLanguage>(() => {
 
 <template>
   <section
+    aria-label="Source code"
     class="bg-card relative min-h-[50vh] overflow-hidden border rounded-lg lg:min-h-0"
   >
     <CodeEditor
