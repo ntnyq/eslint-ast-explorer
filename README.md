@@ -42,6 +42,13 @@ An explicitly selected package version uses jsDelivr; a custom module URL must
 be applied manually in the parser version dialog. TypeScript-ESLint continues
 to use its bundled parser and does not support version overrides.
 
+Package versions must be valid semver versions/ranges (up to 256 characters)
+or dist-tags starting with a letter (up to 64 characters). Paths, encoded
+separators, query strings, fragments, and control characters are rejected before
+any metadata request or module import. The same validation applies to shared
+URLs, restored local state, and manual input; remote module URLs are never
+restored from shared or persisted state.
+
 Astro uses the official `@astrojs/compiler-binding-wasm32-wasi` browser binding
 and Web Workers. Its shared WebAssembly memory requires a secure context and
 cross-origin isolation. `vercel.json`, the development server, and the test

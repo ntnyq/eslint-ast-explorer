@@ -50,6 +50,7 @@ export const displayVersion = ref<string>()
 export const parserVersionError = shallowRef<string>()
 export const isUrlVersion = computed(() => isUrl(overrideVersion.value || ''))
 const userApprovedUrlVersion = shallowRef<string>()
+const overrideVersionInputError = shallowRef<string>()
 
 export const currentLanguage = computed(
   () => LANGUAGES[currentLanguageId.value] || LANGUAGES.javascript,
@@ -73,47 +74,53 @@ export function setParserId(id: string) {
 }
 
 export function setOverrideVersion(version?: string) {
-  const nextVersion = version?.trim() || undefined
-
-  overrideVersion.value = nextVersion
-  userApprovedUrlVersion.value =
-    nextVersion && isUrl(nextVersion) ? nextVersion : undefined
+  return applyOverrideVersion(version, true)
 }
 
 export function restoreOverrideVersion(version?: string) {
-  const nextVersion = version?.trim() || undefined
+  return applyOverrideVersion(version, false)
+}
 
-  overrideVersion.value =
-    nextVersion && !isUrl(nextVersion) ? nextVersion : undefined
-  userApprovedUrlVersion.value = undefined
+function applyOverrideVersion(version: unknown, allowUrl: boolean) {
+  const validated = validateParserVersion(version, allowUrl)
+  overrideVersionInputError.value = validated.error
+  overrideVersion.value = validated.value
+  userApprovedUrlVersion.value =
+    allowUrl && validated.url ? validated.value : undefined
+  return !validated.error
 }
 
 export function clearOverrideVersion() {
   overrideVersion.value = undefined
   userApprovedUrlVersion.value = undefined
+  overrideVersionInputError.value = undefined
 }
 
 const parserModuleCache = new Map<string, Promise<unknown>>()
 
 async function initParser() {
   const { pkgName, init, versionOverridable } = currentParser.value
-  const requestedVersion = overrideVersion.value
-  const urlVersion = isUrlVersion.value
+  const validated = validateParserVersion(overrideVersion.value, true)
+  if (overrideVersionInputError.value || validated.error) {
+    throw new Error(overrideVersionInputError.value || validated.error)
+  }
+  const requestedVersion = validated.value
+  const urlVersion = validated.url
   const pkgId = urlVersion
     ? requestedVersion!
     : `${pkgName}${requestedVersion ? `@${requestedVersion}` : ''}`
+  if (urlVersion && userApprovedUrlVersion.value !== pkgId) {
+    throw new Error('Remote parser URLs must be applied manually')
+  }
   const cached = parserModuleCache.get(pkgId)
   if (cached) {
     return cached
-  }
-  if (urlVersion && userApprovedUrlVersion.value !== pkgId) {
-    throw new Error('Remote parser URLs must be applied manually')
   }
   const pending = Promise.resolve().then(() =>
     urlVersion
       ? importUrl(pkgId)
       : requestedVersion && versionOverridable !== false
-        ? importJsdelivr(pkgId)
+        ? importJsdelivr(pkgName, requestedVersion)
         : init?.(pkgId),
   )
   parserModuleCache.set(pkgId, pending)
@@ -212,7 +219,7 @@ export function initParserModule() {
   )
 
   watch(
-    [currentParserId, overrideVersion],
+    [currentParserId, overrideVersion, overrideVersionInputError],
     async (_value, _previous, onCleanup) => {
       let cancelled = false
       onCleanup(() => {
@@ -223,12 +230,14 @@ export function initParserModule() {
       parserVersionError.value = undefined
 
       try {
+        const validated = validateParserVersion(requestedVersion, true)
+        if (overrideVersionInputError.value || validated.error) {
+          throw new Error(overrideVersionInputError.value || validated.error)
+        }
         if (requestedVersion) {
           displayVersion.value = requestedVersion
           if (!isUrlVersion.value) {
-            const version = await fetchVersion(
-              `${parser.pkgName}@${requestedVersion}`,
-            )
+            const version = await fetchVersion(parser.pkgName, requestedVersion)
             if (!cancelled) {
               displayVersion.value = version
             }

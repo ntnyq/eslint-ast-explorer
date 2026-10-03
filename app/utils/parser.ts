@@ -1,3 +1,5 @@
+import { validateParserVersion } from './parser-version'
+
 const JSDELIVR_PREFIX = 'https://cdn.jsdelivr.net/npm/'
 const SKYPACK_PREFIX = 'https://cdn.skypack.dev/'
 
@@ -15,18 +17,27 @@ export function importUrl<T = any>(url: string, sandbox?: boolean): Promise<T> {
 
 export function importJsdelivr<T = any>(
   pkg: string,
-  path = '/+esm',
+  version: string,
 ): Promise<T> {
-  return importUrl(`${JSDELIVR_PREFIX}${pkg}${path || ''}`)
+  return importUrl(`${parserPackageUrl(pkg, version)}/+esm`)
 }
 
 export function importSkypack<T = any>(pkg: string): Promise<T> {
   return importUrl(`${SKYPACK_PREFIX}${pkg}?min`)
 }
 
-export async function fetchVersion(pkg: string) {
+function parserPackageUrl(pkg: string, version: string) {
+  const validated = validateParserVersion(version)
+  if (validated.error || !validated.value) {
+    throw new Error(validated.error || 'A parser package version is required')
+  }
+  // The version is always one URL component; it cannot change the selected package.
+  return `${JSDELIVR_PREFIX}${pkg}@${encodeURIComponent(validated.value)}`
+}
+
+export async function fetchVersion(pkg: string, version: string) {
   const raw: { version: string } = await fetch(
-    `${JSDELIVR_PREFIX}${pkg}/package.json`,
+    `${parserPackageUrl(pkg, version)}/package.json`,
   ).then(res => res.json())
   return raw.version
 }
