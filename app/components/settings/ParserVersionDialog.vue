@@ -28,8 +28,9 @@ watch(
 )
 
 function applyVersion() {
-  setOverrideVersion(versionValue.value)
-  open.value = false
+  if (setOverrideVersion(versionValue.value)) {
+    open.value = false
+  }
 }
 
 function resetVersion() {
@@ -71,6 +72,7 @@ function resetVersion() {
           </div>
           <p
             v-if="parserVersionError"
+            role="alert"
             class="text-destructive text-xs"
           >
             {{ parserVersionError }}

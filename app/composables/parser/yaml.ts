@@ -1,5 +1,4 @@
 import { yamlTemplate } from '~/constants/templates'
-import { importSkypack } from '~/utils/parser'
 import type * as YamlESLint from 'yaml-eslint-parser'
 import type { YamlESLintParseOptions } from '~/types'
 
@@ -22,7 +21,7 @@ export const yamlESLint = defineParser<
   async version() {
     return (await this).meta.version!
   },
-  init: pkg => importSkypack(pkg),
+  init: () => import('#build/yaml-eslint-parser'),
   parse(code, options) {
     return this.parseForESLint(code, options)
   },

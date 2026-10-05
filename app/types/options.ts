@@ -1,4 +1,6 @@
-export interface AstroESLintParseOptions {}
+export interface AstroESLintParseOptions {
+  parser?: unknown
+}
 
 export interface JsoncESLintParseOptions {}
 

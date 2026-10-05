@@ -3,6 +3,7 @@ import { createJavaScriptRegexEngine } from '@shikijs/engine-javascript'
 import langAstro from '@shikijs/langs/astro'
 import langCss from '@shikijs/langs/css'
 import langHtml from '@shikijs/langs/html'
+import langJs from '@shikijs/langs/javascript'
 import langJson from '@shikijs/langs/json'
 import langSvelte from '@shikijs/langs/svelte'
 import langToml from '@shikijs/langs/toml'
@@ -13,6 +14,7 @@ import vitesseDark from '@shikijs/themes/vitesse-dark'
 import vitesseLight from '@shikijs/themes/vitesse-light'
 
 export const shikiLangs = [
+  langJs,
   langTs,
   langVue,
   langJson,

@@ -8,6 +8,13 @@ export default defineNuxtModule({
   setup() {
     const logger = useLogger('build-eslint-parser')
 
+    for (const name of ['toml-eslint-parser', 'yaml-eslint-parser']) {
+      addTemplate({
+        filename: name,
+        getContents: () => buildESLintParser(logger, name),
+      })
+    }
+
     addTemplate({
       filename: 'jsonc-eslint-parser',
       getContents: () => buildESLintParser(logger, 'jsonc-eslint-parser'),
@@ -18,10 +25,10 @@ export default defineNuxtModule({
       getContents: () => buildESLintParser(logger, 'vue-eslint-parser'),
     })
 
-    // addTemplate({
-    //   filename: 'astro-eslint-parser',
-    //   getContents: () => buildESLintParser(logger, 'astro-eslint-parser'),
-    // })
+    addTemplate({
+      filename: 'astro-eslint-parser',
+      getContents: () => buildESLintParser(logger, 'astro-eslint-parser'),
+    })
 
     addTemplate({
       filename: 'svelte-eslint-parser',

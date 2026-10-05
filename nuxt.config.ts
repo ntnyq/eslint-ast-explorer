@@ -17,6 +17,13 @@ export default defineNuxtConfig({
 
   ssr: !isProduction,
 
+  app: {
+    head: {
+      htmlAttrs: { lang: 'en' },
+      link: [{ href: '/icon_48.png', rel: 'icon', type: 'image/png' }],
+    },
+  },
+
   components: {
     dirs: [
       {
@@ -99,6 +106,7 @@ export default defineNuxtConfig({
     },
 
     optimizeDeps: {
+      exclude: ['@astrojs/compiler-binding-wasm32-wasi'],
       include: [
         '@lucide/vue',
         '@shikijs/core',
@@ -107,6 +115,7 @@ export default defineNuxtConfig({
         '@shikijs/langs/css',
         '@shikijs/langs/html',
         '@shikijs/langs/json',
+        '@shikijs/langs/javascript',
         '@shikijs/langs/svelte',
         '@shikijs/langs/toml',
         '@shikijs/langs/typescript',
@@ -128,12 +137,17 @@ export default defineNuxtConfig({
 
     resolve: {
       alias: {
+        '@astrojs/compiler-binding': '@astrojs/compiler-binding-wasm32-wasi',
         path: 'pathe',
       },
     },
 
     server: {
       cors: true,
+      headers: {
+        'Cross-Origin-Embedder-Policy': 'require-corp',
+        'Cross-Origin-Opener-Policy': 'same-origin',
+      },
     },
   },
 })

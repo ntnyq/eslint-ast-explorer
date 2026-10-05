@@ -1,3 +1,4 @@
+import * as espree from 'espree'
 import { eslintParseResultHideKeys } from '~/constants/parser'
 import { astroTemplate } from '~/constants/templates'
 import type * as AstroESLint from 'astro-eslint-parser'
@@ -23,9 +24,12 @@ export const astroESLint = defineParser<
   async version() {
     return (await this).meta.version!
   },
-  init: pkg => importSkypack(pkg),
+  init: () => import('#build/astro-eslint-parser'),
   parse(code, options) {
-    return this.parseForESLint(code, options)
+    return this.parseForESLint(code, {
+      ...options,
+      parser: options.parser ?? espree,
+    })
   },
 })
 
