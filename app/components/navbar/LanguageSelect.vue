@@ -10,7 +10,7 @@ import {
   ScrollText,
 } from '@lucide/vue'
 import type { Component } from 'vue'
-import type { Language } from '#imports'
+import type { LanguageId } from '#imports'
 
 const languageIcons = {
   astro: FileCode2,
@@ -20,15 +20,15 @@ const languageIcons = {
   toml: FileType2,
   vue: CodeXml,
   yaml: ScrollText,
-} satisfies Record<Language, Component>
+} satisfies Record<LanguageId, Component>
 
-function changeLanguage(language: Language) {
+function changeLanguage(language: LanguageId) {
   currentLanguageId.value = language
 }
 
 const selectedLanguageId = computed({
   get: () => currentLanguageId.value,
-  set: value => changeLanguage(value as Language),
+  set: value => changeLanguage(value as LanguageId),
 })
 </script>
 

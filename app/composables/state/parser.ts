@@ -30,7 +30,7 @@ export const LANGUAGES = {
   yaml,
 }
 
-export type Language = keyof typeof LANGUAGES
+export type LanguageId = keyof typeof LANGUAGES
 
 // Parser
 export const loading = ref<'load' | 'parse' | false>(false)
@@ -42,7 +42,7 @@ export const parseCost = ref(0)
 export const editorCursor = ref(0)
 export const outputHoverRange = shallowRef<LocRange | undefined>()
 
-export const currentLanguageId = ref<Language>('yaml')
+export const currentLanguageId = ref<LanguageId>('yaml')
 export const currentParserId = ref<string | undefined>()
 
 export const overrideVersion = ref<string>()

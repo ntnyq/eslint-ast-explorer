@@ -21,7 +21,7 @@ export function initUrlState() {
     const state = normalizeRestoredUrlState(input)
     currentLanguageId.value =
       state?.l && Object.hasOwn(LANGUAGES, state.l)
-        ? (state.l as Language)
+        ? (state.l as LanguageId)
         : 'yaml'
     const parsers = currentLanguage.value.parsers
     setParserId(

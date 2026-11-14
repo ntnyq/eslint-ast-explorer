@@ -20,7 +20,7 @@ interface BuildESLintParserOptions {
 }
 
 export async function buildESLintParser(
-  logger: ConsolaInstance,
+  logger: Pick<ConsolaInstance, 'info' | 'start' | 'success'>,
   parserPackage: string,
   options: BuildESLintParserOptions = {},
 ) {
@@ -136,6 +136,15 @@ export async function buildESLintParser(
             Replace({
               exclude: [],
               values: [
+                // These dependencies resolve to ESM without default exports.
+                {
+                  find: 'eslintScope.default || eslintScope',
+                  replacement: 'eslintScope',
+                },
+                {
+                  find: 'espree.default || espree',
+                  replacement: 'espree',
+                },
                 {
                   find: /process\.cwd\(\)/g,
                   replacement: '"/"',

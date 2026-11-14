@@ -34,6 +34,8 @@
     "estree",
     "gstatic",
     "iconify",
+    "lucide",
+    "NAPI",
     "nocheck",
     "nuxt",
     "nuxter",
@@ -54,6 +56,7 @@
     "vite",
     "vitesse",
     "vueuse",
+    "wasi",
     "zrender"
   ]
 }

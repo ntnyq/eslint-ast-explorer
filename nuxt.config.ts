@@ -90,6 +90,15 @@ export default defineNuxtConfig({
     prefix: '',
   },
 
+  typescript: {
+    nodeTsConfig: {
+      include: ['../playwright.config.ts'],
+      compilerOptions: {
+        types: ['node'],
+      },
+    },
+  },
+
   umami: {
     autoTrack: false,
     enabled: true,
@@ -101,8 +110,15 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
 
-    esbuild: {
-      legalComments: 'external',
+    build: {
+      // Parsers are lazy-loaded, prebundled modules; TypeScript alone is ~4 MB.
+      chunkSizeWarningLimit: 4500,
+      rolldownOptions: {
+        onLog(level, log, defaultHandler) {
+          // Keep plugin profiling visible without treating timings as build issues.
+          defaultHandler(log.code === 'PLUGIN_TIMINGS' ? 'info' : level, log)
+        },
+      },
     },
 
     optimizeDeps: {
